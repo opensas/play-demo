@@ -8,8 +8,10 @@ import java.util.*;
 import models.*;
 
 public class Application extends Controller {
-    public static void index(String name) {
-	if (name==null) name = "unknown visitor";
-        render(name);
+	
+    public static void list() {
+    	List<Event> events = Event.find("order by date desc").fetch();
+        render(events);
     }
+	
 }

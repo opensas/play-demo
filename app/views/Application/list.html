@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+#{if events}
+    <table border="1">
+        <thead>
+            <th>#</th>
+            <th>Event</th>
+            <th>Type</th>
+            <th>Place</th>
+            <th>Date</th>
+            <th></th>
+        </thead>
+    #{list events, as:'event'}
+        <tr>
+            <th>${event.id}</th>
+            <th>${event.name}</th>
+            <th>${event.type.name}</th>
+            <th>${event.place}</th>
+            <th>${event.date}</th>
+            <th></th>
+        </tr>
+    #{/list}
+    </table>
+#{/if}
+#{else}
+¡No event in sight!
+#{/else}
