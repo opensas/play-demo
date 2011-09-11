@@ -1,0 +1,29 @@
+EventType(presentation):
+   name: presentation
+
+EventType(workshop):
+   name: workshop
+
+Event(first):
+   name: Drools and jBPM5
+   type: presentation
+   place: 64 rue Taitbout, PARIS
+   date: 17-06-2011 9:00:00
+
+Event(second):
+   name: Search Engines
+   type: presentation
+   place: One Brattle Square, Cambridge
+   date: 23-06-2011 18:30:00
+
+Event(Third):
+   name: Scale the Everest with Scala
+   type: presentation
+   place: One Brattle Square, Cambridge
+   date: 04-08-2011 20:00:00
+
+Event(Fourth):
+   name: Play! framework, a java web framework for non-purists
+   type: workshop
+   place: 64 rue Taitbout, PARIS
+   date: 25-08-2011 20:00:00

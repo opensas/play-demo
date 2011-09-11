@@ -1,11 +1,10 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import java.util.List;
 
-import java.util.*;
-
-import models.*;
+import lib.jobs.BootstrapJob;
+import models.Event;
+import play.mvc.Controller;
 
 public class Application extends Controller {
 	
@@ -13,5 +12,10 @@ public class Application extends Controller {
     	List<Event> events = Event.find("order by date desc").fetch();
         render(events);
     }
-	
+
+    public static void loadFromYamlFile() {
+    	new BootstrapJob().doJob();
+    	list();
+    }
+    
 }

@@ -6,6 +6,8 @@
 GET     /                                       Application.list
 GET     /events                                 Application.list
 
+*       /admin                                  module:crud
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
