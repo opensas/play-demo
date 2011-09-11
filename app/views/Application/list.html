@@ -1,8 +1,15 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
+#{set title:'Events' /}
 
+<section id="list">
+
+<div class="page-header">
+    <h1>Events</h1>
+</div>
+
+<div class="row">
 #{if events}
-    <table border="1">
+    <table class="zebra-striped sorted">
         <thead>
             <th>#</th>
             <th>Event</th>
@@ -13,12 +20,12 @@
         </thead>
     #{list events, as:'event'}
         <tr>
-            <th>${event.id}</th>
-            <th>${event.name}</th>
-            <th>${event.type.name}</th>
-            <th>${event.place}</th>
-            <th>${event.date}</th>
-            <th></th>
+            <td>${event.id}</td>
+            <td>${event.name}</td>
+            <td>${event.type.name}</td>
+            <td>${event.place}</td>
+            <td>${event.date}</td>
+            <td></td>
         </tr>
     #{/list}
     </table>
@@ -26,5 +33,16 @@
 #{else}
 ¡No events in sight!
 #{/else}
+</div> <!-- /row -->
 
-#{a @loadFromYamlFile()}load data from yaml file#{/a}
+<div class="list-actions">
+    #{a @loadFromYamlFile(), class:'btn'}load from yaml#{/a}
+</div>
+
+</section>
+
+<script >
+  $(function() {
+    $("table.sorted").tablesorter({ sortList: [[1,0]] });
+  });
+</script>
