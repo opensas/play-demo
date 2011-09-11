@@ -6,6 +6,9 @@
 GET     /                                       Application.list
 GET     /events                                 Application.list
 
+DELETE  /event/{id}                             Application.delete
+GET     /event/delete/{id}                      Application.delete
+
 *       /admin                                  module:crud
 
 # Ignore favicon requests

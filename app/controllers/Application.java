@@ -13,6 +13,12 @@ public class Application extends Controller {
         render(events);
     }
 
+    public static void delete(Long id) {
+    	Event event = Event.findById(id);
+    	event.delete();
+    	list();
+    }
+    
     public static void loadFromYamlFile() {
     	new BootstrapJob().doJob();
     	list();

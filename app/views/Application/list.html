@@ -19,13 +19,13 @@
             <th></th>
         </thead>
     #{list events, as:'event'}
-        <tr>
+        <tr id="row_${event.id}">
             <td>${event.id}</td>
             <td>${event.name}</td>
             <td>${event.type.name}</td>
             <td>${event.place}</td>
-            <td>${event.date}</td>
-            <td></td>
+            <td>${event?.date?.format('dd-MM-yyyy HH:mm')}</td>
+            <td><a href="javascript:del(${event.id})"><img src="@{'/public/images/delete.jpg'}" /></a></td>
         </tr>
     #{/list}
     </table>
@@ -41,8 +41,18 @@
 
 </section>
 
-<script >
-  $(function() {
-    $("table.sorted").tablesorter({ sortList: [[1,0]] });
-  });
+<script>
+    $(function() {
+	    $("table.sorted").tablesorter({ sortList: [[1,0]] });
+    });
+</script>
+
+<script>
+function del(id) {
+    $.ajax( {
+        type: "DELETE",
+        url: '/event/' + id
+    });
+    $("#row_" + id).fadeOut(1000);
+}
 </script>
