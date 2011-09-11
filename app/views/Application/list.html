@@ -21,7 +21,7 @@
     #{list events, as:'event'}
         <tr id="row_${event.id}">
             <td>${event.id}</td>
-            <td>${event.name}</td>
+            <td>#{a @form(event.id)}${event.name}#{/a}</td>
             <td>${event.type.name}</td>
             <td>${event.place}</td>
             <td>${event?.date?.format('dd-MM-yyyy HH:mm')}</td>
@@ -36,6 +36,7 @@
 </div> <!-- /row -->
 
 <div class="list-actions">
+    #{a @form(), class:'btn primary'}new event#{/a}
     #{a @loadFromYamlFile(), class:'btn'}load from yaml#{/a}
 </div>
 

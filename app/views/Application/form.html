@@ -1,0 +1,35 @@
+#{extends 'main.html' /}
+#{set title:'Events' /}
+
+<br /><br /><br /><br />
+
+#{ifErrors}
+<p>errors found!</p>
+#{/ifErrors}
+
+#{form @save()}
+
+    <input type="hidden" name="event.id" value="${event.id}" />
+    
+    name: <input name="event.name" value="${event.name}" /> <br />
+    <span>#{error 'event.name' /}</span><br /><br />
+    
+    type: 
+    <select name="event.type.id">
+        <option value=""${event.type==null ? ' selected' : ''}>--select an option--</option>
+        #{list types, as:'type'}
+            <option value="${type.id}"${event.type?.id==type.id ? ' selected' : ' '}>${type.name}</option>
+        #{/list}
+    </select><br />
+    <span>#{error 'event.type' /}</span><br /><br />
+    
+    place: <input name="event.place" value="${event.place}" /> <br />
+    <span>#{error 'event.place' /}</span><br /><br />
+    
+    date: <input name="event.date" value="${event.date?.format('MM-dd-yyyy HH:mm')}" /> <br />
+    <span>#{error 'event.date' /}</span><br /><br />
+    
+    <br />
+    <input type="submit" value="Save changes" /> or #{a @list()}cancel#{/a}
+
+#{/form}
