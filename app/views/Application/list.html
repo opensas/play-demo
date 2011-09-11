@@ -7,6 +7,13 @@
     <h1>Events</h1>
 </div>
 
+#{if flash.success}
+    <div class="alert-message success">
+        <a class="close" href="#">&times;</a>
+        <p>${flash.success}</p>
+    </div>
+#{/if}
+
 <div class="row">
 #{if events}
     <table class="zebra-striped sorted">

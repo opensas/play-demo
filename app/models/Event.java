@@ -28,5 +28,4 @@ public class Event extends Model {
 		return name;
 	}
 	
-	
 }
