@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import lib.jobs.BootstrapJob;
@@ -19,6 +20,7 @@ public class Application extends Controller {
     public static void delete(Long id) {
     	Event event = Event.findById(id);
     	event.delete();
+    	
     	list();
     }
     
@@ -39,6 +41,11 @@ public class Application extends Controller {
     	event.save();
     	flash.success("event successfully saved!");
     	list();
+    }
+
+    public static void nextEvent() {
+    	Event nextEvent = Event.find("date > ? order by date", new Date()).first();
+    	render(nextEvent);
     }
     
     public static void loadFromYamlFile() {

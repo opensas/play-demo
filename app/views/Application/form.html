@@ -50,3 +50,15 @@
 </div> <!-- /div class="row"> -->
 
 </section>
+<script type="text/javascript">
+    $.datepicker.setDefaults($.datepicker.regional['en']);
+    $('#event\\.date').datetimepicker( {
+        dateFormat: 'mm-dd-yy',
+        hour: 18,
+        numberOfMonths: 2,
+        hourGrid: 1,
+        minuteGrid: 10,
+        stepHour: 1,
+        stepMinute: 10
+    });
+</script>

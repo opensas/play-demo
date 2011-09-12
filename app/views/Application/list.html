@@ -31,7 +31,7 @@
             <td>#{a @form(event.id)}${event.name}#{/a}</td>
             <td>${event.type.name}</td>
             <td>${event.place}</td>
-            <td>${event?.date?.format('dd-MM-yyyy HH:mm')}</td>
+            <td>${event?.date?.format('MM-dd-yyyy HH:mm')}</td>
             <td><a href="javascript:del(${event.id})"><img src="@{'/public/images/delete.jpg'}" /></a></td>
         </tr>
     #{/list}

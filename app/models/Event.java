@@ -7,6 +7,8 @@ import play.db.jpa.*;
 import javax.persistence.*;
 import java.util.*;
 
+import lib.utils.DateHelper;
+
 @Entity
 public class Event extends Model {
 
@@ -26,6 +28,10 @@ public class Event extends Model {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	public String countDown() {
+		return DateHelper.dateDiff(new Date(), date);
 	}
 	
 }
