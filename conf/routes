@@ -6,10 +6,16 @@
 GET     /                                       Application.list
 GET     /events                                 Application.list
 
-DELETE  /event/{id}                             Application.delete
-GET     /event/delete/{id}                      Application.delete
+GET     /edit/{id}                              Application.form
+GET     /new                                    Application.form
 
-*       /admin                                  module:crud
+POST    /save                                   Application.save
+
+POST    /delete/{id}                            Application.delete
+
+GET     /load                                   Application.loadFromYamlFile
+
+*       /admin                                  module:crudsiena
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
