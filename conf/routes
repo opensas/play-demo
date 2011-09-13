@@ -15,7 +15,12 @@ POST    /delete/{id}                            Application.delete
 
 GET     /load                                   Application.loadFromYamlFile
 
-*       /admin                                  module:crudsiena
+#
+# Authentication
+#
+GET     /oauthtw                                Secure.oauthTwitter
+GET     /login                                  Secure.login
+GET     /logout                                 Secure.logout
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
