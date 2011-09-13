@@ -9,10 +9,12 @@ import models.EventType;
 import play.data.validation.Valid;
 import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.With;
 
 public class Application extends Controller {
 	
     public static void list() {
+    	Secure.loadUser();
     	List<Event> events = Event.find("order by date desc").fetch();
         render(events);
     }
@@ -53,8 +55,8 @@ public class Application extends Controller {
     	list();
     }
     
-	@SuppressWarnings("unused")
-	@Before
+    @SuppressWarnings("unused")
+    @Before
 	private static void loadEventTypes() {
 		renderArgs.put("types", EventType.find("order by name").fetch());
 	}

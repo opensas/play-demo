@@ -1,6 +1,16 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
 
+#play-logo {
+    background: url(../images/play-logo.png) no-repeat 50% 50%;
+    background-size: 60px;
+    display: block;
+    height: 40px;
+    width: 60px;
+    padding: 0px;
+    float: right;
+}
+
 /* Body and structure
 -------------------------------------------------- */
 body {
