@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import lib.utils.DateHelper;
 import play.data.validation.Required;
 import play.modules.siena.EnhancedModel;
+import siena.Column;
 import siena.Generator;
 import siena.Id;
 
@@ -19,7 +20,7 @@ public class Event extends EnhancedModel {
 	public String name;
 	
 	@Required(message="You have to select the type of the event.")
-	@ManyToOne
+	@Column("type")
 	public EventType type;
 	
 	@Required(message="You have to complete the event's place.")

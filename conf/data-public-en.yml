@@ -8,7 +8,7 @@ EventType(workshop):
    name: workshop
 
 Event(uno):
-   name: ¿How does cloud computing affects application integration?
+   name: ¿Cómo afecta la nube a la integracion de Applicaciones?
    type: presentation
    place: Downtown
    date: 05-19-2011 18:30:00
