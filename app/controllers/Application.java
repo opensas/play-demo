@@ -6,6 +6,7 @@ import java.util.List;
 import lib.jobs.BootstrapJob;
 import models.Event;
 import models.EventType;
+import play.cache.Cache;
 import play.data.validation.Valid;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -15,14 +16,14 @@ public class Application extends Controller {
 	
     public static void list() {
     	Secure.loadUser();
-    	List<Event> events = Event.all().order("-date").fetch();
+    	final List<Event> events = Event.all().order("-date").fetch();
         render(events);
     }
 
     public static void delete(Long id) {
-    	Event event = Event.findById(id);
+    	final Event event = Event.findById(id);
     	event.delete();
-    	
+    	refreshNextEvent();
     	list();
     }
     
@@ -41,17 +42,19 @@ public class Application extends Controller {
     		render("@form", event);
     	}
     	event.save();
+    	refreshNextEvent();
     	flash.success("event successfully saved!");
     	list();
     }
 
     public static void nextEvent() {
-    	Event nextEvent = Event.all().filter("date>", new Date()).order("date").get();
+    	final Event nextEvent = getNextEvent();
     	render(nextEvent);
     }
     
     public static void loadFromYamlFile() {
     	new BootstrapJob().doJob();
+    	refreshNextEvent();
     	list();
     }
     
@@ -61,4 +64,18 @@ public class Application extends Controller {
 		renderArgs.put("types", EventType.all().order("name").fetch());
 	}
     
+	private static Event getNextEvent() {
+		Event nextEvent = (Event) Cache.get("nextEvent");
+		if (nextEvent==null) {
+			nextEvent = refreshNextEvent();
+		}
+		return nextEvent;
+	}
+	
+	private static Event refreshNextEvent() {
+		final Event nextEvent = Event.all().filter("date>", new Date()).order("date").get();
+		Cache.set("nextEvent", nextEvent);
+		return nextEvent;
+	}
+	
 }
