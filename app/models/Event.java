@@ -1,17 +1,20 @@
 package models;
 
-import play.*;
-import play.data.validation.Required;
-import play.db.jpa.*;
+import java.util.Date;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.ManyToOne;
 
 import lib.utils.DateHelper;
+import play.data.validation.Required;
+import play.modules.siena.EnhancedModel;
+import siena.Generator;
+import siena.Id;
 
-@Entity
-public class Event extends Model {
+public class Event extends EnhancedModel {
 
+	@Id(Generator.AUTO_INCREMENT)
+	public Long id;
+	
 	@Required(message="You have to complete the event's name.")
 	public String name;
 	
@@ -32,6 +35,10 @@ public class Event extends Model {
 
 	public String countDown() {
 		return DateHelper.dateDiff(new Date(), date);
+	}
+	
+	public static Event findById(Long id) {
+		return all().filter("id", id).get();
 	}
 	
 }

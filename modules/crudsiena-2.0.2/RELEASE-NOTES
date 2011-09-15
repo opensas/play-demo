@@ -1,0 +1,36 @@
+Play Siena release notes:
+From v2.0.3, we will try to keep tracks of modifications from now.
+The github issues are not traced because  
+
+v2.0.4
+----------------------------------------------------------
+== BUG FIXES ==
+* Merge pull request #2 from ngirardin/master
+
+* corrected bug in YAML fixtures when loading related entities of
+different types than the owning entity + a bug in models with @id
+field not being named "id" (this comes from a code in original play
+module which forbids models with an @id different from "id")
+
+* corrected a bug in Query management which didn't manage
+de-association of a related entity in a list selector
+
+* added new tests for native embedding of models
+
+== ENHANCEMENTS ==
+* Upgrading to siena-1.0.0-b6-SNAPSHOT.jar
+
+* Integrated GAE Native embedding feature
+
+
+
+
+v2.0.3
+----------------------------------------------------------
+
+== BUG FIXES ==
+* corrected bugs on EnhancedModel functions which were not
+enhanced at all (findById, getByKey & batch)
+
+== ENHANCEMENTS ==
+* added tests for EnhancedModel enhanced functions

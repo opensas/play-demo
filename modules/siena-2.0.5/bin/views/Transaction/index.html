@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+#{set title:'accounts' /}
+
+<h1>Accounts debit/credit</h1>
+<p>
+   <a href="@{Transaction.commit()}">Commit</a>
+   <a href="@{Transaction.failure()}">Failure</a>
+</p>
+
+<ul>
+    <li>FROM: ${accFrom.amount}</li>
+    <li>TO: ${accTo.amount}</li>
+</ul>

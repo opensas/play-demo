@@ -1,0 +1,54 @@
+#{field (_prefix ? _prefix + '.' : 'object.') + _name}
+%{
+    if(_value){   	
+    	if(_type){
+    		if(_type instanceof String)
+    			currentType = play.Play.classloader.loadClass(_type)
+    		else if(_type instanceof Class)
+    			currentType = _type	
+	    }
+	    else{
+	    	currentType = _value?.getClass()
+	    }
+    }
+    else if(_type){
+    	if(_type instanceof String)
+   			currentType = play.Play.classloader.loadClass(_type)
+   		else if(_type instanceof Class)
+   			currentType = _type	   
+	}
+
+    // Eval fields tags
+    def fieldsHandler = [:]
+    if(_body) {
+        _body.setProperty('fieldsHandler', fieldsHandler);
+        _body.toString(); // we skeep the real result ...
+    }
+}%
+
+<p class="crudEmbeddedButtons">
+	<label for="${field.id}">
+		&{'crud.map.key'}
+	</label>
+	<input id="${field.id}_add_key" class="${field.errorClass}" type="text" value="" size="50" />
+	<button id="${field.id}_button_add_map" type="button"> 
+		&{'crud.add', currentType.getSimpleName()}
+	</button>
+</p>
+<script type="text/javascript">
+	$('#${field.id}_button_add_map').click( function() {
+		var mkey = $('#${field.id}_add_key').val();
+		if(!mkey || mkey == '') alert("&{'crud.map.pleasefillkey'}");
+		else addMapElement('${_id?_id:"_"}', '${_name}', mkey, '#${field.id}');
+	});
+</script>
+<div class="crudObjectMap" id="${field.id}">
+#{list items: _value?.keySet(), as:'key'}
+	#{crud.objectMapItem 
+		prefix:field.name, 
+		entityId:_id, entityField:_name,
+		itemKey:key, itemValue:_value?.get(key), itemType:currentType  /}
+#{/list}
+
+</div>
+#{/field}

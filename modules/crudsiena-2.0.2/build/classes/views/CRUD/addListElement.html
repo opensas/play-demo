@@ -1,0 +1,24 @@
+{%
+	if(object){
+       	f = object.getClass().getField(field);
+       	fieldType = f.getGenericType().getActualTypeArguments()[0];
+		fieldValue = f.get(object);
+	}		
+%}
+#{ifErrors field}
+	<div class="crudFlash flashError">
+		${error}
+	</div>
+#{/ifErrors}
+#{else}
+ 	<div class="crudFlash flashSuccess">
+		&{'crud.addListElement.success', field}
+	</div>
+#{/else}
+
+#{list items: fieldValue, as:'obj'}
+	#{crud.objectListItem 
+		prefix:'object.'+field, 
+		entityId:id, entityField:field,
+		itemValue:obj, itemType:fieldType, itemIdx:obj_index-1 /}
+#{/list}

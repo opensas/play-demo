@@ -1,0 +1,14 @@
+#{extends 'main.html' /}
+#{set title:'nextPage' /}
+
+<h1>Employees (${emps.size()})</h1>
+<p>
+   <a href="@{Application.nextPage()}">Next Page</a>
+   <a href="@{Application.previousPage()}">Previous Page</a>
+</p>
+
+<ul>
+    #{list items:emps, as:'emp' }
+        <li>${emp?.id}: ${emp}</li>
+    #{/list}
+</ul>

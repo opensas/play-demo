@@ -15,7 +15,7 @@ public class Application extends Controller {
 	
     public static void list() {
     	Secure.loadUser();
-    	List<Event> events = Event.find("order by date desc").fetch();
+    	List<Event> events = Event.all().order("-date").fetch();
         render(events);
     }
 
@@ -46,7 +46,7 @@ public class Application extends Controller {
     }
 
     public static void nextEvent() {
-    	Event nextEvent = Event.find("date > ? order by date", new Date()).first();
+    	Event nextEvent = Event.all().filter("date>", new Date()).order("date").get();
     	render(nextEvent);
     }
     
@@ -55,10 +55,10 @@ public class Application extends Controller {
     	list();
     }
     
-    @SuppressWarnings("unused")
-    @Before
+	@SuppressWarnings("unused")
+	@Before
 	private static void loadEventTypes() {
-		renderArgs.put("types", EventType.find("order by name").fetch());
+		renderArgs.put("types", EventType.all().order("name").fetch());
 	}
     
 }

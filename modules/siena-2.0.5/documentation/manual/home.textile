@@ -1,0 +1,351 @@
+h1. Play Siena module v2.x
+
+The siena module automatically enables "Siena":http://www.sienaproject.com support for your application for GAE/MySQL/PostgreSQL/H2 databases.
+
+
+h2. <a>Release notes</a>
+
+bq. **NEW** v2.0.4 embeds siena-1.0.0-b6 & provides GAE Native Embedding & corrects bug in YAML loading of models with @Id field not named "id" and YAML loading of related entities
+
+bq. **NEW** v2.0.3 correcting bugs on EnhancedModel functions which were not enhanced at all (findById, getByKey & batch)
+
+* v2.x brings support for :
+** GAE 
+** MySQL
+** Postgresql
+** H2
+
+* v2.x brings support for IDs of type Long (auto-generated or manual) and String (manual or auto-generated as UUID).
+
+* v2.x brings a new class called __EnhancedModel__ which is a normal __siena.Model__ enhanced at runtime by Play to provide __all()__ function (and other functions also but it will be detailed later). Please see below for more details.
+
+* v2.x  is a complete refactoring of siena module based on Siena v1.x. Yet, for those who used Siena before, it doesn't change anything as Siena v1.0.0 is 100% backward compatible (at least in theory).
+
+* v2.x is compatible with Play version >1.2.1 and uses dependency management.
+
+p(note). **Note** v1.x only supported GAE but this is not the case anymore. Other NoSQL Databases will be added later.
+
+p(note). **Note** play-siena v2.0.4-SNAPSHOT embeds siena v1.0.0-b6: don't worry about the beta5, the code is quite stable but there are lots of new features in this version and we need to evaluate them in real environments such as Play! 
+
+==<br/>==
+==<br/>==
+
+h2. <a>Enable Siena in your application</a>
+
+h3. <a>Install Siena module</a>
+
+bc. play install siena
+
+h3. <a>Configure your dependencies</a>
+
+In your __/conf/dependencies.yml__ file, enable the Siena module by adding these lines:
+
+bc.. require:
+    - play -> play [1.2.1,)
+    - play -> siena [2.0.0,)
+    
+p. With it, we ensure that you have at least Play 1.2.1 and siena 2.0.0.
+
+h3. <a>Run @play deps@</a>
+
+==<br/>==
+==<br/>==
+
+h2. <a>Configure your database for Siena</a>
+
+p(note). **Note** Configure your database: Siena module simply uses database connectors configured and provided by Play.
+
+h3. <a>Configure GAE database</a>
+
+For GAE, this is really simple as you don't need anything else but the GAE module in your dependencies.yml
+
+bc.. require:
+    - play -> play [1.2.1,)
+    - play -> siena [2.0.0,)
+    - play -> gae 1.4
+
+p(note). **IMPORTANT** Run @play deps@ before running @play run@ or you will have unknown classes error as the dependencies have not been resolved. 
+
+p(note). **IMPORTANT** Do not declare any SQL DB configuration in your __conf/application.conf__ as it would prevail on GAE configuration. 
+
+==<br/>==
+
+h3. <a>Configure SQL database</a>
+
+Here, it uses exactly the configuration of Play so please directly read "Play database documentation":http://www.playframework.org/documentation/1.2.1/model#database
+
+Some examples:
+
+bc.. 
+#uses embedded H2 in memory provided by Play
+db=mem
+
+#uses embedded H2 in file provided by Play 
+db=fs
+    
+#uses MySQL 
+db=mysql:user:pwd@database_name  
+    
+#uses Postgresql 
+db.url=jdbc:postgresql:sienatest
+db.driver=org.postgresql.Driver
+db.user=sienatest
+db.pass=sienatest
+
+p. 
+
+==<br/>==
+==<br/>==
+
+h2. <a>Configure SQL database DDL creation/update</a>
+
+In SQL, the database requires tables/indexes to be created according to your models.
+Moreover, when you change your model, you would like the tables to be modified also.
+
+Siena Module can do that for you (it uses "Apache DDLUtils":http://db.apache.org/ddlutils/).
+
+Yet, the behavior in PROD or DEV mode shouldn't be the same.
+In DEV mode, you certainly want the DB to be updated at each modification just by reloading your webpage (or you don't sometimes).
+In PROD mode, you certainly want the DB to be updated only when you want.
+
+To configure Siena DDL, add the **siena.ddl** parameter to your __conf/application.conf__. Yet, it's not mandatory to add it and Siena DDL has a default behavior (see below).
+
+bc.. #siena.ddl can take values create/update/none
+siena.ddl=create
+
+p. 
+
+h3. <a>__siena.ddl__ possible values</a>
+
+**siena.ddl** can take the following values:
+
+|_. value|_. description|
+|**create**|Siena DDL tries to create the tables corresponding to your models if they don't exist yet but it doesn't alter anything if yet existing.|
+|**update**|Siena DDL tries to upgrade the database to your current model by creating/deleting/altering.|
+|**none**|Siena DDL doesn't try to do anything|
+
+==<br/>==
+
+h3. <a>Siena DDL default behavior</a>
+
+If you don't configure **siena.ddl**, here is the default behavior:    
+
+|_. mode|_. description|
+|**DEV**|Siena DDL is by default in __update__ mode and tries to upgrade your database|
+|**PROD**|Siena DDL is by default in __none__ mode and doesn't try to do anything|
+
+p(note). **Note** JPA parameters from your play config are not used at all.    
+
+p(note). **Note** Apache DDLUtils has some bugs so the version delivered with Siena module has been patched for a few ones. Moreover, the H2 support is not exactly perfect so some issues might appear. Don't hesitate to contact me if you have any problem.    
+
+==<br/>==
+==<br/>==
+
+h2. <a>Activate Siena Lifecycle Annotations</a>
+
+To configure Siena DDL, add the **siena.lifecycle** parameter to your __conf/application.conf__. 
+
+bc.. #siena.ddl can take values create/update/none
+siena.lifecycle=true
+
+p. 
+
+bq. By default, Siena lifecycle annotations are NOT managed so you shall explicitly set the configuration to trigger it on
+
+p(note). **Note** For more info on lifecycle annotations, go to "Lifecycle Siena Doc":https://github.com/mandubian/siena/blob/master/source/documentation/manuals/lifecycle.textile
+
+==<br/>==
+==<br/>==
+
+h2. <a>Using siena</a>
+
+For more informations check at the "Siena documentation":http://www.sienaproject.com/documentation.html page. 
+p(note). **Note** This documentation is no more up to date as Siena has been deeply enhanced for v1.0.0 and we are going to write much more docs very soon. Meanwhile, here are a few information to begin.
+
+**Important remarks** 
+* The __@Id__ is mandatory
+* The __@Column__ are not mandatory (the field name are used by Siena otherwise)
+* The __all()__ function is just a facility function: you can call the __all(Employee.class)__ directly also.
+* Extending siena.Model is not mandatory but it's a Siena facility providing the active record design. For ex: @myobject.save()@  
+* The embedded classes can be defined outside the class
+* The enums can be defined outside the class
+
+h3. <a>A classical Siena model with auto-generated Long ID</a>
+
+bc.. @Table("employees")
+public class Employee extends Model {
+        
+        @Id(Generator.AUTO_INCREMENT)
+        public Long id;
+        
+        @Column("first_name")
+        @Max(10) @NotNull
+        public String firstName;
+                
+        @Column("last_name")
+        @Max(200) @NotNull
+        public String lastName;
+        
+        @Password
+        @Column("pwd")
+        public String pwd;
+        
+        @Column("contact_info")
+        public Json contactInfo;       
+        
+        @Column("hire_date")
+        public Date hireDate;
+        
+        @Column("fire_date")
+        @DateTime
+        public Date fireDate;
+        
+        @Column("boss") @Index("boss_index")
+        public Employee boss;
+        
+        @Filter("boss")
+        public siena.Query<Employee> employees;
+               
+        @Embedded
+        public Image profileImage;
+        
+        @Embedded
+        public List<Image> otherImages;
+
+        @Embedded
+        public Map<String, Image> stillImages;
+        
+        @EmbeddedMap
+        public class Image {
+                public String filename;
+                public String title;
+                public int views;
+                public MyEnum itemEnum;
+        }
+              
+        @Embedded
+        public List<UserBlabla> items;
+        
+        @EmbeddedList
+        public class UserBlabla {
+          @At(0) public String item;
+          @At(1) public String item2;
+          @At(2) public MyEnum itemEnum;
+        }
+        
+        public MyEnum enumField;
+        
+        public static enum MyEnum{
+        	VAL1,
+        	VAL2,
+        	VAL3
+        };
+        
+        public String toString() {
+        	return firstName + " " + lastName;
+        }
+
+        public static Query<Employee> all() {
+        	return Model.all(Employee.class);
+        }
+}
+
+p. 
+
+==<br/>==
+
+h3. <a>A classical Siena model with manual String ID</a>
+
+p(note). **Remark** the Generator.NONE to tell this is a manual ID
+
+bc.. @Table("manual_string_models")
+public class ManualStringModel extends Model{
+    @Id(Generator.NONE)
+    public String id;
+    
+    public String 	alpha;
+    public short	beta;
+    
+    public String toString() {
+    	return id + " " + alpha + " " + beta;
+    }
+    
+    public static Query<ManualStringModel> all() {
+        return Model.all(ManualStringModel.class);
+    }
+}
+
+p. 
+
+==<br/>==
+
+h3. <a>A classical Siena model with auto-generated Long ID with a non-"id" name</a> 
+
+bc.. @Table("otherid_models")
+public class OtherIdModel extends EnhancedModel{
+    @Id(Generator.AUTO_INCREMENT)
+    public Long myId;
+    
+    public String 	alpha;
+    public short	beta;
+    
+    public String toString() {
+    	return myId + " " + alpha + " " + beta;
+    }
+    
+    public static Query<OtherIdModel> all() {
+        return Model.all(OtherIdModel.class);
+    }
+}
+
+p. 
+
+==<br/>==
+
+h3. <a>A classical Siena model with UUID String ID</a>
+
+p(note). **Remark** the Generator.UUID to tell this is a UUID ID
+
+bc.. @Table("uuid_models")
+public class UUIDModel extends EnhancedModel{
+    @Id(Generator.UUID)
+    public String id;
+    
+    public String 	alpha;
+    public short	beta;
+    
+    public String toString() {
+    	return id + " " + alpha + " " + beta;
+    }
+    
+    public static Query<UUIDModel> all() {
+        return Model.all(UUIDModel.class);
+    }
+}
+
+p.
+
+==<br/>==
+ 
+h3. <a>An enhanced Siena model for the lazy people</a>
+
+If like me, you are very lazy and don't want to write the all() function, Siena module provides a new class called __EnhancedModel__ which uses Play! runtime enhancing mechanism to add this function (and others) to your Siena Model.
+I don't know yet whether this class is useful or not. The future will decide it.
+
+bc.. @Table("manual_string_models")
+public class ManualStringModel extends EnhancedModel{
+    @Id(Generator.NONE)
+    public String id;
+    
+    public String 	alpha;
+    public short	beta;
+    
+    public String toString() {
+    	return id + " " + alpha + " " + beta;
+    }
+}
+
+p. Then you can call:
+
+bc. ManualStringModel toto = ManualStringModel.all().filter("id", "toto").get();
+

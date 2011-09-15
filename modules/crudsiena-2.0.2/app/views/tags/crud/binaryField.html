@@ -1,0 +1,19 @@
+#{field (_prefix ? _prefix + '.' : 'object.') + _name}
+    <label for="${field.id}">
+        &{_name}
+    </label>
+    <div class="crudSubForm">
+		<div class="crudField crud_text">
+    	#{if _value && _value.length > 0 && _id}
+    	    <label style="width:50%">Current binary data length is</label><input type="text" disabled="true" value="${_value.length} bytes"/>
+    	#{/if}
+    	</div>
+		<div class="crudField crud_text">
+	    	<label style="width:50%" for="${field.id}">Change data by uploading a file:</label> <input id="${field.id}" class="${field.errorClass}" type="file" name="${field.name}" />
+	    </div>
+    </div>
+   	#{ifError field.name}
+       	<span class="error">${field.error}</span>
+   	#{/ifError}
+   	<div style="clear: both;"></div>
+#{/field}

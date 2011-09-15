@@ -1,0 +1,37 @@
+OtherIdModel(chboing):
+  alpha: chboing
+  beta: 1
+  
+OtherIdStringModel(plouf):
+  myId: plouf
+  alpha: plouf
+  beta: 2
+  link: chboing
+  
+OtherIdStringModel2(plouf2):
+  myId: plouf2
+  alpha: plouf2
+  beta: 3
+  link: plouf
+  
+OtherIdStringModel2(plouf21):
+  myId: plouf21
+  alpha: plouf21
+  beta: 4
+  link: plouf
+
+OtherIdStringModel2(plouf22):
+  myId: plouf22
+  alpha: plouf22
+  beta: 5
+  link: plouf
+      
+OtherIdStringModel3(plouf3):
+  myId: plouf3
+  alpha: plouf3
+  beta: 5
+  links: 
+    - plouf22
+    - plouf21
+    - plouf2
+            

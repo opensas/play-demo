@@ -1,0 +1,11 @@
+Play CRUD Siena release notes:
+From v2.0.2, we will try to keep tracks of modifications from now.
+The github issues are not traced because  
+
+v2.0.2
+----------------------------------------------------------
+
+== BUG FIXES ==
+
+== ENHANCEMENTS ==
+* integrated + tested management of models with new GAE Native embedding feature

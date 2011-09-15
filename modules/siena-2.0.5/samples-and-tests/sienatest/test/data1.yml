@@ -1,0 +1,79 @@
+# you describe your data using the YAML notation here
+# and then load them using Fixtures.load("data.yml")
+
+# User(bob):
+#   email: bob@gmail.com
+#   password: secret
+#   fullname: Bob
+
+Employee(bob):
+  firstName: Bob
+  lastName: Smith
+  pwd: password1
+  contactInfo: { "alpha1": "beta1" }
+  hireDate: 2011-06-26 14:30:05
+  fireDate: 2011-06-26 14:30:05
+  profileImage:
+    filename: filename1.ext
+    title: title1
+    views: 1
+    itemEnum: VAL1
+  otherImages:
+    - filename: filename1.ext
+      title: title1
+      views: 1
+      itemEnum: VAL1
+    - filename: filename2.ext
+      title: title2
+      views: 2
+      itemEnum: VAL2
+  stillImages:
+    test1:
+          filename: filename1.ext
+          title: title1
+          views: 1
+          itemEnum: VAL1
+    test2: 
+          filename: filename2.ext
+          title: title2
+          views: 2
+          itemEnum: VAL2
+  items:
+    - 
+      - "alpha1"
+      - "beta1"
+      - VAL1
+    - 
+      - "alpha2"
+      - "beta2"
+      - VAL2
+  enumField: VAL3
+    
+Employee(john):
+  firstName: John
+  lastName: Doe
+  pwd: password2
+  contactInfo: { "alpha2": "beta2" }
+  hireDate: 2011-06-26 14:30:05
+  fireDate: 2011-06-26 14:30:05
+  profileImage:
+    filename: filename2.ext
+    title: title2
+    views: 2
+    itemEnum: VAL2    
+  boss: bob
+  
+Employee(emp1):
+  firstName: emp1
+  lastName: name1
+
+Employee(emp2):
+  firstName: emp2
+  lastName: name2
+
+Employee(boss):
+  firstName: boss
+  lastName: name3
+  employees: 
+    - emp1
+    - emp2

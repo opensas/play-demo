@@ -62,8 +62,8 @@
 <script>
 function del(id) {
     $.ajax( {
-        type: "DELETE",
-        url: '/event/' + id
+        type: "POST",
+        url: '/delete/' + id
     });
     $("#row_" + id).fadeOut(1000);
 }

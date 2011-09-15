@@ -1,0 +1,129 @@
+p(note). Since v2.0.0, the project is hosted by Github "play-crud-siena":https://github.com/mandubian/play-crud-siena under MIT license
+
+h1. CRUD Siena Play! v2.x
+
+bq. **NEW** v2.0.2 depends on play-siena v2.0.4+siena-1.0.0-b6 & provides GAE Native Embedding & corrects bug in YAML loading of models with @Id field not named "id" and YAML loading of related entities
+
+h2. Release notes
+
+* v2.0.x has to be considered in parallel with "Play Module siena-2.0.x":http://www.playframework.org/modules/siena-2.0.0/home as both modules were developed together.
+
+* v2.0.x requires Play >v1.2.1 (due to a bug in transitive module dependencies in v1.2).
+
+* v2.0.x supports :
+** GAE 
+** MySQL
+** Postgresql
+** H2
+
+* v2.0.x main new features:
+** support for IDs of type Long (auto-generated or manual) and String (manual or auto-generated as UUID).
+** A new field filter in entity tables that allows to choose which fields are displayed.
+** The search has been implemented also with some limitations depending on the DB type (and still strange issues to correct IMO).
+** ONE2ONE/ONE2MANY/embedded management has been improved.
+
+* v2.x is a complete refactoring of crudsiena module based on Siena v1.x. Yet, for those who used Siena before, it doesn't change anything as Siena v1.0.0 is 100% backward compatible (at least in theory).
+
+
+p(note). **IMPORTANT** The main difference to know is that now **SienaSupport class has been removed** completely as the Siena Crud manages any Siena Class if there is a Controller for it.
+
+p(note). **Note** v1.x only supported GAE but this is not the case anymore. Other NoSQL Databases will be added later.
+
+h2. <a>Enable Crud Siena support</a>
+
+h3. <a>Install Siena module</a>
+
+bc.. play install siena
+
+h3. <a>Install CrudSiena module</a>
+
+bc.. play install crudsiena
+
+h3. <a>Add CrudSiena module to your dependencies</a>
+
+In your __/conf/dependencies.yml__ file, enable the CrudSiena module by adding these lines:
+
+bc.. require:
+    - play -> play [1.2.1,)
+    - play -> crudsiena [2.0.0,)
+    
+p. Siena module is brought by transitivity through crudsiena 
+We ensure that you have at least Play 1.2.1.
+
+p(note). **IMPORTANT** Do not add default crud dependency, it would collide with Siena Crud. 
+
+h2. <a>Configure your database</a>
+
+For this, please refer to "Siena module":http://www.playframework.org/modules/siena-2.0.0/home
+
+
+h2. <a>Provide a simple Siena model</a>
+
+p(note). **IMPORTANT** you don't need to extend **SienaSupport** anymore.
+
+For example:
+
+bc.. @Table("employees")
+public class Employee extends Model {
+
+        @Id(Generator.AUTO_INCREMENT)
+        public Long id; 
+
+        @Column("first_name")
+        @Max(100) @NotNull
+        public String firstName;      
+  
+        ...
+}
+
+
+p. For more information about Siena Model, please refer to "Siena module":http://www.playframework.org/modules/siena-2.0.0/home
+
+
+h2. <a>Create a CRUD controller inheriting class CRUD</a>
+
+
+For each Siena entity requiring CRUD support, create a controller.
+You just have to annotate your controller with **@For(ModelClass)**.
+
+For example:
+
+bc. @For(models.Employee.class)
+public class Employees extends controllers.CRUD {
+}
+
+h2. <a>Enable routes to the CRUD module</a>
+
+**At the beginning** of your conf/routes file, add:
+
+bc. *    /admin    module:crudsiena
+
+
+h2. <a>Play Validation with Siena annotations</a>
+
+These are Siena model Annotations managed by the CrudSiena module: 
+* **@Siena.Max(NB_CHAR)** is managed (enhancer creates dynamically a @play.data.validation.MaxSize(NB_CHAR) ) 
+* **@Siena.NotNull** is managed (enhancer creates dynamically a @play.data.validation.Required ) 
+* **@DateTime** is managed and displays a timepicker
+
+
+
+h2. <a>Play Validation with Play annotations</a>
+
+These are Play Annotations managed by the CrudSiena module:
+* **@Required** is managed and displays an error if the field is not filled
+* **@Password** is managed and displays a password text field
+* **@Hidden** is managed and hides the field
+
+h2. <a>Specific CrudSiena annotations</a>
+
+* **@CrudUnique** is a new Annotation not provided by Play neither Siena. It verifies a field value is unique in its table. 
+_(thanks to Spreiter301 for his contribution... see "googlecode issue":http://code.google.com/p/mandubian-play-crud-siena/issues/detail?id=2)_
+*Be careful this annotation calls DB requests that can be quite heavy so it might impact your application performance.* (I will try to provide a mechanism to control where this annotation is applied but it is not so trivial) 
+
+h2. <a>Known limitations</a>
+
+* GAE BLOB binding has been removed because CrudSiena module can't depend on GAE now that it provides multi-db support. So you have to write the class by yourself to use it. __I will provide it as a utility.__
+
+This is the first version and issues will be found for sure.
+So don't hesitate to tell me about it or to open issues on "github project":https://github.com/mandubian/play-crud-siena

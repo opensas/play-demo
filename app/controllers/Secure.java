@@ -129,7 +129,7 @@ public class Secure extends Controller {
         if (OAuth2.isCodeResponse()) {
             // El usuario autorizo el acceso desde Facebook
             OAuth2.Response response = FACEBOOK.retrieveAccessToken(authUrl);
-            User user = User.find("accessToken = ?", response.accessToken).first();
+            User user = User.all().filter("accessToken", response.accessToken).get();
             if ( user == null ) {
                 user = new User();
                 user.accessToken = response.accessToken;

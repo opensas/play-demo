@@ -1,0 +1,42 @@
+%{
+    if(_type) {
+    	currentType = _type
+    }
+    else {
+    	currentType = _caller.type
+    }
+    
+    allFields = currentType.rawFields
+
+    if(_fields){
+    	currentFields = _fields
+    } else {
+    	currentFields = _caller.fields
+    }
+
+
+	// Eval fields tags
+	def fieldsHandler = [:]
+	if(_body) {
+		_body.setProperty('fieldsHandler', fieldsHandler);
+}%
+		#{doBody as:'skip' /}
+%{
+	}
+}%
+
+#{form action:@list().remove('page'), method:'GET'}
+<table>
+		<tr>
+		%{ if(allFields) { }%
+			%{ allFields.each() { }%
+			<td width="${100 / allFields.size()}%">
+				<input class="field-check" type="checkbox" name="fields" value="${it}" #{if currentFields?.contains(it)}checked="checked"#{/if}>&{it}</input>
+			</td>
+			%{ } }%
+		%{ } }%
+			<td><p class="crudButtons"><input type="submit" value="&{'crud.resetList'}" onclick="$('.field-check').attr('checked', false);"/></p></td>
+			<td><p class="crudButtons"><input type="submit" value="&{'crud.filterList'}" /></p></td>
+		</tr>
+</table>
+#{/form}

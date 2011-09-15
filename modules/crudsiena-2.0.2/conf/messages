@@ -1,0 +1,67 @@
+# Default CRUD SIENA messages
+# ~~~~~~
+
+crud.title=Administration
+crud.home=Home
+crud.blank=New
+crud.index.title=Choose the object to edit
+crud.index.objectType=Object type
+crud.index.action=
+crud.index.add=Add
+crud.add=Add &{%s}
+crud.list.title=&{%s}
+crud.list.size=%d &{%s}
+crud.list.totalSize=%d total
+crud.pagination.previous=« Previous
+crud.pagination.next=Next »
+crud.pagination.last=Last »»
+crud.pagination.first=«« First
+crud.show.title=Edit &{%s}
+crud.save=Save
+crud.saveAndContinue=Save and continue editing
+crud.cancel=Cancel
+crud.hasErrors=Please correct errors
+crud.blank.title=Add &{%s}
+crud.saveAndAddAnother=Save and create another
+crud.delete=Delete &{%s}
+crud.created=The &{%s} has been created
+crud.saved=The &{%s} has been saved
+crud.deleted=The &{%s} has been deleted
+crud.delete.error=Cannot delete this object
+crud.search=Search
+crud.none=(None)
+crud.selectValue=(Please select a value)
+
+crud.help.required=Required.
+crud.help.minlength=Min length is %d.
+crud.help.maxlength=Max length is %d.
+crud.help.email=Valid email address.
+crud.help.dateformat=YYYY-MM-DD format.
+crud.help.dateTimeformat=YYYY-MM-DD hh:mm:ss format.
+crud.help.numeric=Numeric.
+crud.help.min=Must be greater than %d.
+crud.help.future=In the future.
+crud.help.past=In the past.
+crud.help.after=After %s.
+crud.help.before=Before %s.
+crud.help.range=Between %d and %d
+
+
+#siena collections
+crud.add = Add %s
+crud.addListElement.saveBefore = Please save the object once before adding list elements
+crud.addListElement.success = Element successfully added to list
+crud.deleteListElement.success = Element successfully deleted from list
+crud.addMapElement.saveBefore = Please save the object once before adding map elements
+crud.addMapElement.success = Element successfully added to map
+crud.deleteMapElement.success = Element successfully deleted from map
+
+crud.filterList = Filter Fields
+crud.resetList = Reset Fields
+crud.gae.searchlimited = In GAE, you can search on 1 field at a time. Please filter to have 1 field...
+crud.map.key = Key
+crud.map.pleasefillkey = Please fill the key field
+
+validation.fieldMap.alreadyExists = %s[%s] already exists
+validation.notParsable = field "%s" not parsable : %s
+validation.unique = this field has a unique constraint and this value already exists

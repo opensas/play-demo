@@ -15,7 +15,7 @@ POST    /delete/{id}                            Application.delete
 
 GET     /load                                   Application.loadFromYamlFile
 
-*       /admin                                  module:crud
+*       /admin                                  module:crudsiena
 
 #
 # Authentication

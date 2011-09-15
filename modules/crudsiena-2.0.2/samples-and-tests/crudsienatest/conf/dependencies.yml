@@ -1,0 +1,8 @@
+# Application dependencies
+
+require:
+    - play -> play [1.2.1,)
+    - play -> crudsiena [2.0.0,)
+    - play -> gae 1.4
+    #- postgresql -> postgresql 8.4-702.jdbc4
+    

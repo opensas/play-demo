@@ -1,0 +1,11 @@
+%{
+    if(_delete == "all") {
+       play.modules.siena.SienaFixture.deleteAll()
+    }
+}%
+
+%{
+    if(_load) {
+        play.modules.siena.SienaFixture.load(_load)
+    }
+}%

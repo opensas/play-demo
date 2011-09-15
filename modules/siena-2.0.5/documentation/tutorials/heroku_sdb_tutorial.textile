@@ -1,0 +1,521 @@
+h1. Play/Siena Heroku + Amazon SimpleDB tutorial
+
+Since Heroku introduced Java and then integrated Play deployment, it has become a really interesting platform for us play supporters. Heroku is based on Amazon Services.
+
+Siena now provides a brand new NoSQL implementation for Amazon SimpleDB. It's still under tests but it already works in many usecases.
+
+The SDB implementation has been integrated in the "play-siena module":http://www.playframework.org/modules/siena as draft version *2.0.5*.
+
+So here is a tutorial showing how to build a play app based on Siena+SDB deployed on Heroku.
+In order to show that Siena can replace easily JPA, this tutorial is based on "Felipe Oliveira's Tweet tutorial":http://geeks.aretotally.in/twitter-playframework-heroku.
+
+It enhances it a bit by adding a small pagination mechanism and uses "Twitter bootstrap UI toolkit":http://twitter.github.com/bootstrap/
+
+h2. <a name="requirements">Requirements</a>
+
+h3. <a name="req-aws">Amazon account</a>
+
+To connect to AWS SimpleDB, you need a "AWS account":http://aws.amazon.com/console/ and you need to activate SimpleDB and get 2 important data:
+* *AWS access key id*
+* *AWS secret key*
+
+h3. <a name="req-heroku">Heroku account</a>
+
+Naturally, as the aim is to deploy on "Heroku":http://www.heroku.com/, you need a Heroku account.
+The tutorials I used to install Heroku tools are:
+* "installation of RVM":http://beginrescueend.com/rvm/install/ 
+* "Heroku quickstart":http://devcenter.heroku.com/articles/quickstart
+* "Heroku Play tutorial":http://devcenter.heroku.com/articles/play
+
+I had a bug with ruby on my Ubuntu 10.04 when launching @Heroku@ command:
+
+bc. .../rubygems/custom_require.rb:31:in `gem_original_require': no such file to load -- readline (LoadError)
+
+
+It was solved following "this article":http://blog.project-sierra.de/archives/1534
+
+==<br/>==
+ 
+
+h2. <a name="play">Initialize your Play project</a>
+
+h3. <a name="play-create">Create the project</a>
+
+bc. play new play-siena-sdb
+
+p. ==<br/>==
+
+h3. <a name="play-dep">Add siena + sdb dependency</a>
+
+_*conf/dependencies.yml*_
+
+bc.. require:
+    - play
+    - play -> crudsiena [2.0.1,)
+    - play -> siena [2.0.5,)
+    - com.amazonaws -> aws-java-sdk 1.2.4
+    - org.apache.httpcomponents -> httpcore 4.1.1       
+        
+p. Do not forget to let play resolve deps:
+
+bc. play deps
+ 
+
+==<br/>==
+
+h3. <a name="play-proj">Enhance your project for your Eclipse/IDEA/Netbean</a>
+
+bc. play eclipsify/idealize/netbeansify
+
+
+p. ==<br/>==
+
+h3. <a name="play-conf">Configure SimpleDB</a>
+
+_*conf/application.conf*_
+
+bc.. db=sdb
+siena.aws.accesskeyid=XXXXXXXXXXXXXXXXXXXXX
+siena.aws.secretaccesskey=YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+
+p. ==<br/>==
+
+h3. <a name="play-model">Create the model</a>
+
+_*app/models/Tweet.java*_
+
+bc.. public class Tweet extends Model {
+
+	@Id(Generator.UUID)
+	public UUID id;       
+
+	@Required
+	@MaxSize(140)
+	public String tweet;
+
+	@Required
+	@DateTime
+	public Date createDate = new Date();
+	
+	public String toString() {
+		return tweet;
+	}
+
+	public static List<Tweet> findLatest() {
+		return Model.all(Tweet.class).order("-createDate").fetch();
+	}
+}
+
+p(note). *Note* the @UUID@ Id of the model because SDB doesn't manage auto incremented Identifiers.
+
+p(note). *Note* the @findLatest@ function which is just a conversion to Siena syntax of the function written by Felipe in his tutorial.
+
+p. ==<br/>==
+
+h3. <a name="play-model-crud">Create the CRUD controller in app/controllers/Tweets.java</a>
+
+bc.. @CRUD.For(Tweet.class)
+public class Tweets extends controllers.CRUD {    
+
+}
+
+p. ==<br/>==
+
+h3. <a name="play-controller-basic">Create a basic controller</a>
+
+_*app/controllers/Application.java*_
+
+bc.. public class Application extends Controller {
+
+	// lists all tweets ordered descendant 
+	public static void index() {
+		List<Tweet> tweets = Tweet.findLatest();
+
+		render(tweets);
+	}
+
+	public static void create(String msg) {
+		Tweet tweet = new Tweet();
+		tweet.tweet = msg;
+		tweet.save();
+		
+		// refresh the latest tweets in case other peoplep added other tweets in parallel
+		List<Tweet> tweets = Tweet.findLatest();		
+		renderTemplate("Application/list.html", tweets);
+	}
+}
+
+p(note). *Note* the end of @create@ function is not the same as Felipe's function because it will be useful when implementing pagination a bit further in this tutorial. Moreover, it allows several people to add tweets in parallel (we are in a distributed env) and the list will be reloaded immediately.  
+
+p. ==<br/>==
+
+h3. <a name="play-master">Customize main template with Twitter Bootstrap fixed toolbar</a>
+
+_*app/views/main.html*_
+
+bc.. <!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta charset="${_response_encoding}">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        #{get 'moreStyles' /}
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        #{get 'moreScripts' /}
+    </head>
+    <body style="padding-top: 40px;">
+    	<div class="container">
+			<div class="topbar-wrapper" style="z-index: 5;">
+				<div class="topbar">
+					<div class="fill">
+						<div class="container">
+							<h3>
+								<a href="#">Welcome to Tweeter</a>
+							</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+	        #{doLayout /}
+        </div>
+    </body>
+</html>
+
+p(note). *Note* the @padding-top: 40px@ in the <body> tag to allow content to be under the toolbar
+
+p. ==<br/>==
+
+h3. <a name="play-index">Customize basic template to display tweet form + list of recent tweets</a>
+
+_*app/views/application/index.html*_
+
+bc.. #{extends 'main.html' /}
+#{set title:'Welcome to Tweeter' /}
+
+#{set 'moreScripts' }
+<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.1.1.min.css">
+#{/set}
+
+<div class="row">
+</div>
+<div class="row">
+	<!-- Create Tweet Form --> 
+	<form> 
+		Enter your tweet: <input name="tweet" type="text" />
+		<button class="btn primary">Tweet</button> 
+	</form>
+</div>
+<div class="row">
+	<!-- Latest Tweets List -->
+	<table class="zebra-striped">
+		<thead>
+			<tr>
+				<th width="80%">Message</th>
+				<th width="20%">Since</th>
+			</tr>
+		</thead>
+		<tbody class="tweets">
+	#{list tweets}	
+		<tr><td>${_.tweet}</td><td>${_.createDate.since()}</td></tr>
+	#{/list}
+	#{else}
+		<tr><td>No tweet</td><td></td></tr>
+	#{/else}
+		</tbody>
+	</table>
+
+</div>
+
+<!-- JS -->
+<script type="text/javascript">
+// Capture Form Submit Event
+$('form').submit(function() {
+	// Define Create Action
+	var createAction = #{jsAction @create(':tweet') /}
+	
+	$('.tweets').load(createAction({ tweet: encodeURIComponent($('input:first').val()) }));
+
+	// Don't let the browser redirect
+	return false;
+});
+</script>
+
+
+p(note). *Note* the @encodeURIComponent@ to be able to type a message composed of several words
+
+p(note). *Note* the @moreScripts@ containing the Twitter Bootstrap CSS link
+
+
+p. ==<br/>==
+
+h3. <a name="play-list">Create the list template to display only the content of the table of the latest tweets</a>
+
+_*app/views/application/list.html*_
+
+bc.. #{list tweets}
+	<tr><td>${_.tweet}</td><td>${_.createDate.since()}</td></tr>
+#{/list}
+#{else}
+	<tr><td>No more tweets</td><td></td></tr>
+#{/else}
+
+p. ==<br/>==
+
+h3. <a name="play-test1">Test your app</a>
+
+bc. play run
+
+Go to *http://localhost:9000* 
+
+p. ==<br/>==
+
+h3. <a name="play-paginate">Add Siena pagination to the controller</a>
+
+_*app/controllers/Application.java*_
+
+bc.. public class Application extends Controller {
+	static Query<Tweet> q;
+
+	@Before
+	public static void loadQuery() {
+		q = (Query<Tweet>) Cache.get("q"+session.getId());
+		if (q == null) {
+			// stateful is just meant to use GAE cursors instead of offsets
+			q = Model.all(Tweet.class).order("-createDate").paginate(10);
+		}
+	}
+
+	@After
+	public static void saveQuery() {
+		Cache.set("q"+session.getId(), q);
+	}
+
+	public static void index() {
+		List<Tweet> tweets = q.fetch();
+
+		render(tweets);
+	}
+
+	public static void nextPage() {
+		List<Tweet> tweets = q.nextPage().fetch();
+
+		renderTemplate("Application/list.html", tweets);
+	}
+
+	public static void previousPage() {
+		List<Tweet> tweets = q.previousPage().fetch();
+
+		renderTemplate("Application/list.html", tweets);
+	}
+
+
+	public static void create(String msg) {
+		Tweet tweet = new Tweet();
+		tweet.tweet = msg;
+		tweet.save();
+		
+		List<Tweet> tweets = q.release().fetch();
+		
+		renderTemplate("Application/list.html", tweets);
+	}
+}
+
+
+p. Have a look at this code and note especially:
+* The static member @Query<Tweet> q@ representing the query which is serialized in the Cache associated to the user session. This query object can be reused and keeps the context for pagination.
+* the 2 function annotated <code>@Before</code> & <code>@After</code> allowing to create the query object, retrieve it before each request and put it into the cache after.
+* The 2 functions @nextPage@ & @previousPage@ calling the query pagination functions and rendering the list template.
+* The @q.release()@ call in @create@ which tells the query to reset its context so that the displayed tweets are the latest ones including the newest one.
+ 
+p. ==<br/>==
+
+h3. <a name="play-paginate-view">Add Siena pagination to the view index.html</a>
+
+_*app/views/application/index.html*_
+
+bc.. #{extends 'main.html' /}
+#{set title:'Welcome to Tweeter' /}
+
+#{set 'moreScripts' }
+<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.1.1.min.css">
+#{/set}
+
+<div class="row">
+</div>
+<div class="row">
+	<!-- Create Tweet Form --> 
+	<form> 
+		Enter your tweet: <input name="tweet" type="text" />
+		<button class="btn primary">Tweet</button> 
+	</form>
+</div>
+<div class="row">
+	<!-- Latest Tweets List -->
+	<div class="pagination">
+		<ul> 
+			<li class="prev"><a href="#">&larr; Previous</a></li>
+			<li class="next"><a href="#">Next &rarr;</a></li>
+		</ul>
+	</div>		
+	<table class="zebra-striped">
+		<thead>
+			<tr>
+				<th width="80%">Message</th>
+				<th width="20%">Since</th>
+			</tr>
+		</thead>
+		<tbody class="tweets">
+	#{list tweets}	
+		<tr><td>${_.tweet}</td><td>${_.createDate.since()}</td></tr>
+	#{/list}
+	#{else}
+		<tr><td>No tweet</td><td></td></tr>
+	#{/else}
+		</tbody>
+	</table>
+	<div class="pagination">
+		<ul> 
+			<li class="prev"><a href="#">&larr; Previous</a></li>
+			<li class="next"><a href="#">Next &rarr;</a></li>
+		</ul>
+	</div>
+
+</div>
+
+<!-- JS -->
+<script type="text/javascript">
+// Capture Form Submit Event
+$('form').submit(function() {
+	// Define Create Action
+	var createAction = #{jsAction @create(':tweet') /}
+	
+	$('.tweets').load(createAction({ tweet: encodeURIComponent($('input:first').val()) }));
+
+	// Don't let the browser redirect
+	return false;
+});
+
+$('li.prev > a').click(function() {
+	var prevAction = #{jsAction @previousPage() /}
+	
+	$('.tweets').load(prevAction());
+
+	// Don't let the browser redirect
+	return false;
+});
+
+$('li.next > a').click(function() {
+	var nextAction = #{jsAction @nextPage() /}
+	
+	// Call Create Action
+	$('.tweets').load(nextAction());
+	
+	// Don't let the browser redirect
+	return false;
+});
+
+</script>
+
+p. Have a look at this code and note especially:
+* the 2 @<div class="pagination">@ containing the button Previous/Next
+* the @$('li.prev > a').click@ containing the action executed when clicking on the pagination buttons and calling the @nextPage@ & @previousPage@ controller actions added in previous paragraph. It only reloads the list into the table.
+
+
+p. ==<br/>==
+
+h3. <a name="play-route">Add route for module crudsiena</a>
+
+_*conf/routes*_
+
+bc. *      	/admin             						module:crudsiena
+
+h3. <a name="play-messages">Correct default play messages bug in Heroku Play integration</a>
+
+I've discovered that default messages in Play framework itself (PLAY_PATH/resources/messages) are not provided by Heroku (certainly a bug which will be corrected soon). Until the correction, add the following in your messages file.
+
+_*conf/messages*_
+
+bc.. since.seconds = %s second%s ago
+since.minutes = %s minute%s ago
+since.hours   = %s hour%s ago
+since.days    = %s day%s ago
+since.months  = %s month%s ago
+since.years   = %s year%s ago
+since.format  = MMM d, yyyy
+
+# Validation messages
+validation.required=Required
+validation.minSize=Minimum size is %2$d
+validation.maxSize=Maximum size is %2$d
+validation.email=Invalid email address
+validation.range=Not in the range %2$d through %3$d
+validation.min=Cannot be lower than %2$d
+validation.max=Cannot be greater than %2$d
+validation.match=Must match %2$s
+validation.isTrue=Must be checked
+validation.equals=Must be equal to &{%2$s}
+validation.invalid=Incorrect value
+validation.future=Must be in the future
+validation.after=Must be after %2$s
+validation.past=Must be in the past
+validation.before=Must be before %2$s
+validation.object=Validation failed
+validation.notFound=Object not found for id %2$s
+validation.url=Not a valid URL
+validation.phone=Not a valid phone
+validation.ipv4=Not a valid IP address
+validation.ipv6=Not a valid IP v6 address
+
+p. ==<br/>==
+
+h3. <a name="play-test2">Test your app again</a>
+
+bc. play run
+
+Go to *http://localhost:9000* 
+
+p. ==<br/>==
+
+h2. <a name="deploy">Deploy on Heroku</a>
+
+h3. <a name="heroku-procfile">Create the file Procfile used by heroku to launch the app</a>
+
+_*Procfile*_
+
+bc. web: play run --http.port=$PORT $PLAY_OPTS
+
+p(note). *Note* @PLAY_OPTS@ can be customized using the command @heroku config:
+
+bc. heroku config:add PLAY_OPTS=... 
+
+p. ==<br/>==
+
+h3. <a name="heroku-create">Create the heroku application</a>
+
+bc. heroku create play-siena-sdb --stack cedar
+
+p. ==<br/>==
+
+h3. <a name="heroku-git">Gitify your application</a>
+
+bc.. > git init 
+> git add .
+> git commit -a -m “Initial Commit”
+> git remote add heroku git@heroku.com:play-twitter.git
+
+p. ==<br/>==
+
+h3. <a name="heroku-push">Push your app to Heroku</a>
+
+bc. git push heroku master
+
+p. You can see the Status and the logs of your app
+
+bc.. heroku ps 
+heroku logs
+
+p. ==<br/>==
+
+h2. HAVE FUN...

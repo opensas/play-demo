@@ -1,0 +1,19 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+*      	/admin             						module:crudsiena
+
+# Home page
+GET     /                                       Application.index
+GET     /fourword                               Application.fourword
+GET     /fourword2                               Application.fourword2
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
+

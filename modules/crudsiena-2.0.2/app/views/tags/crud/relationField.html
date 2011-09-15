@@ -1,0 +1,69 @@
+%{ 
+pName = 'object.' + _name + '.' + play.modules.siena.SienaModelUtils.keyName(_field.property.relationType) 
+
+if(_caller.currentObject)
+	keyVal = play.modules.siena.SienaModelUtils.keyValue(_caller.currentObject)
+}%
+
+#{field 'object.' + _name}
+    <label for="${field.id}">
+        &{_name}
+    </label>
+
+    #{if _field.multiple}
+        <input type="hidden" name="${pName}" value="" />
+        <select id="${field.id}" name="${pName}" multiple="yes" #{if !keyVal}disabled="true"#{/if}>
+            %{ _field.choices.each() { }%
+            %{
+                selected = false;
+                if(field.error?.message != 'validation.required') {
+                    if(params[pName]) {
+                        selected = params.getAll(${pName}).contains(play.modules.siena.SienaModelUtils.keyValue(it).toString())
+                    } else {
+                    	if(keyVal){
+	                        for (it2 in _value?.fetch()) {
+	                            if(play.modules.siena.SienaModelUtils.keyValue(it2) == play.modules.siena.SienaModelUtils.keyValue(it)) {
+	                                selected = true;
+	                            }
+	                        }
+	                    }
+                    }
+                }
+            }%
+            <option value="${play.modules.siena.SienaModelUtils.keyValue(it)}" ${selected ? 'selected="true"'.raw() : ''}>${it}#{if play.modules.siena.SienaModelUtils.keyValue(it) == _id } (me)#{/if}</option>
+            %{ } }%
+        </select>
+        
+        #{if !keyVal}
+    	<span class="error">Please save it once before selecting &{_name}</span>
+    	#{/if}
+    #{/if}
+    #{else}
+        <select id="${field.id}" name="${pName}">
+            #{ifnot _field.required}
+                <option value="">&{'crud.none'}</option>
+            #{/ifnot}
+            #{else}
+                <option value="">&{'crud.selectValue'}</option>
+            #{/else}
+            %{ _field.choices.each() { }%
+            %{
+                selected = false
+                if(field.error?.message != 'validation.required') {
+                    if(params[pName]) {
+                        selected = (play.modules.siena.SienaModelUtils.keyValue(it).toString() == params[pName])
+                    } else {
+                        selected = play.modules.siena.SienaModelUtils.keyValue(it) == play.modules.siena.SienaModelUtils.keyValue(_value)
+                    }
+                }
+            }%
+            <option value="${play.modules.siena.SienaModelUtils.keyValue(it)}" ${selected ? 'selected="true"'.raw() : ''}>${it}#{if play.modules.siena.SienaModelUtils.keyValue(it) == _id } (me)#{/if}</option>
+            %{ } }%
+        </select>
+    #{/else}
+
+    #{ifError field.name}
+        <span class="error">${field.error.raw()}</span>
+    #{/ifError}
+    
+#{/field}

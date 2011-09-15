@@ -1,0 +1,42 @@
+*{ 
+	#{crud.objectMapItem 
+		prefix:prefix, 
+		entityId:entityId, entityField:entityField,
+		itemKey:itemKey, itemValue:itemValue, itemType:itemType,  /}
+		
+	Displays an item of a list embedded within an Siena entity
+	
+	Inputs
+	prefix			: the prefix name used as base for all DOM ID
+	entityId		: the ID of the parent entity containing the list
+	entityField		: the name of the field in the entity
+	itemKey			: the key of the item in the map
+	itemValue		: the item value 
+	itemType		: the item type
+ }*
+#{field _prefix}
+<div id="${field.id}_${_itemKey}" class="crudEmbeddedObject">
+	<!--input class="mapKey" type="text" name="${field.name}.key" value="${_itemKey}"/-->
+	<label class="mapKey" for="${field.name}[${_itemKey}]">
+		${_itemKey}
+	</label>
+	#{crud.subform value:_itemValue, type:_itemType, 
+		prefix:field.name + "[" + _itemKey + "]" /}
+	
+	<div class="crudEmbeddedObject_commands">
+		<p class="crudEmbeddedDelete">
+			<input id="${field.id}_${_itemKey}_button_delete" type="submit" 
+				value="&{'crud.delete', _itemType.getSimpleName()}"/>
+		</p>
+	</div>
+	<script type="text/javascript">
+	$(function() {
+		$('#${field.id}_${_itemKey}_button_delete').click( function() {
+			delMapElement('${_entityId}', '${_entityField}', 
+					'${_itemKey}', '#${field.id}');
+			return false;
+		});
+	});
+	</script>		
+</div>
+#{/field}

@@ -1,0 +1,29 @@
+%{
+	if(_fields){
+	   	currentFields = _fields
+	} else {
+	  	currentFields = _caller.fields
+	}
+}%
+
+#{form action:@list().remove('page'), method:'GET'}
+	#{if currentFields}
+		<input type="hidden" name="searchFields" value="${currentFields.toString().substring(1, currentFields.toString().length()-1).replace(',', '')}" />
+		<input type="hidden" name="fields" value="${currentFields?.join(',')}" />
+	#{/if}
+	%{ if (play.modules.siena.SienaPlugin.dbType().contains("gae")) {
+			if(currentFields?.length==1){
+				isOK = true 
+			}			
+	 	} else {
+	 		isOK = true
+	 	}
+	 }%
+	<input type="text" name="search" value="${params.search?.escape()?.raw()}" #{if !isOK}disabled="true"#{/if}/> <input type="submit" value="&{'crud.search'}" #{if !isOK}disabled="true"#{/if}/>
+	#{if _caller.params.search}
+		(<a href="@{list().add('fields', currentFields?.join(','))}">&{'crud.list.totalSize', _caller.totalCount}</a>)
+	#{/if}
+	#{if !isOK}
+		<span class="flashError">&{'crud.gae.searchlimited'}</span>
+	#{/if}
+#{/form}

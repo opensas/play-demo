@@ -1,0 +1,50 @@
+#{field (_prefix ? _prefix + '.' : 'object.') + _name}
+%{
+    if(_value){   	
+    	if(_type){
+    		if(_type instanceof String)
+    			currentType = play.Play.classloader.loadClass(_type)
+    		else if(_type instanceof Class)
+    			currentType = _type	
+	    }
+	    else{
+	    	currentType = _value?.getClass()
+	    }
+    }
+    else if(_type){
+    	if(_type instanceof String)
+   			currentType = play.Play.classloader.loadClass(_type)
+   		else if(_type instanceof Class)
+   			currentType = _type	   
+	}
+
+    // Eval fields tags
+    def fieldsHandler = [:]
+    if(_body) {
+        _body.setProperty('fieldsHandler', fieldsHandler);
+        _body.toString(); // we skeep the real result ...
+    }
+}%
+
+<p class="crudButtons">
+	<button id="${field.id}_button_add" type="button"> 
+		&{'crud.add', currentType.getSimpleName()}
+	</button>
+</p>
+<script type="text/javascript">
+	$('#${field.id}_button_add').click( function() {
+		addListElement('${_id?_id:"_"}', '${_name}', '#${field.id}');
+	});
+</script>
+<div class="crudEmbeddedList" id="${field.id}">
+
+#{list items: _value, as:'obj'}
+	#{crud.objectListItem 
+		prefix:field.name, 
+		entityId:_id, entityField:_name,
+		itemValue:obj, itemType:currentType, itemIdx:obj_index-1 /}
+#{/list}
+</div>
+
+
+#{/field}

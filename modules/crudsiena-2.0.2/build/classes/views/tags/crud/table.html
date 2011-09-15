@@ -1,0 +1,98 @@
+%{
+    if(_type) {
+    	currentType = _type
+    }
+    else {
+    	currentType = _caller.type
+    }
+    
+    if(_fields){
+    	currentFields = _fields
+    } else {
+        currentFields = _caller.fields
+    }
+
+	// Eval fields tags
+	def fieldsHandler = [:]
+	if(_body) {
+		_body.setProperty('fieldsHandler', fieldsHandler);
+}%
+		#{doBody as:'skip' /}
+%{
+	}
+}%
+
+<table>
+	<thead>
+		<tr>
+		%{ if(currentFields) { }%
+			%{ currentFields.each() { }%
+			<th width="${100 / currentFields.size()}%">
+				%{ if(!_sort || _sort.contains(it)) { }%
+				<a class="${_caller.orderBy == it ? (_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc') : ''}" href="@{list().remove('page').add('search', params.search).add('orderBy', it).add('order', (_caller.orderBy == it && _caller.order == 'ASC' ? 'DESC' : 'ASC')).add('fields', currentFields?.join(','))}">
+					&{it}
+				</a>
+				%{ } else { }%
+					&{it}
+				%{ } }%
+			</th>
+			%{ } }%
+		%{ } else { }%
+			<th>
+				<a class="${_caller.order == 'DESC' ? 'crudSortedDesc' : 'crudSortedAsc'}" href="@{list().remove('page').add('search', params.search).add('order', (_caller.order == 'DESC' ? 'ASC' : 'DESC')).add('fields', currentFields?.join(','))}">
+					&{_caller.type.name}
+				</a>
+			</th>
+		%{ } }%
+		</tr>
+	</thead>
+	%{ _caller.objects.eachWithIndex() { object, k -> }%
+	<tr class="${k % 2 ? 'even' : 'odd'}">
+		%{ if(currentFields) { }%
+			%{ currentFields.eachWithIndex() { field, i -> }%
+			<td>
+				%{ 
+					fieldValue = object[field];
+				
+					if(fieldsHandler[field]) { }%
+					%{
+						def handler = fieldsHandler[field];
+						handler.setProperty('object', object);
+					}%
+					#{doBody body:handler /}
+					%{
+						handler.setProperty('object', null);
+					}%
+				%{ } else { }%
+					%{ if(i == 0) { }%
+						<a href="@{show(play.modules.siena.SienaModelUtils.keyValue(object))}">${fieldValue?.toString()?.escape()?.raw() ?: '(no value)'}</a>
+					%{ } else { }%
+                        %{ if(_caller.type.getField(field).type == 'file') { }%
+                            %{ if(fieldValue) { }%
+                                <a class="currentAttachment" href="@{attachment(object.id, field)}">${fieldValue.filename} (${object[field].get().size().formatSize()})</a>
+                             %{ } else { }%
+                                
+                             %{ } }%
+                        %{ } else { }%
+                            ${fieldValue?.escape()?.raw()}
+                        %{ } }%
+					%{ } }%
+				%{ } }%
+			</td>
+			%{ } }%
+		%{ } else { }%
+			%{ if(fieldsHandler['default']) { }%
+				%{
+					def handler = fieldsHandler['default'];
+					handler.setProperty('object', object);
+				}%
+				#{doBody body:handler /}
+			%{ } else { }%
+				<td>
+					<a href="@{show(play.modules.siena.SienaModelUtils.keyValue(object))}">${object.toString()?.escape()?.raw() ?: '(no value)'}</a>
+				</td>
+			%{ } }%
+		%{ } }%
+	</tr>
+	%{ } }%
+</table>

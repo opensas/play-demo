@@ -1,0 +1,20 @@
+# Routes for the CRUD SIENA module
+# ~~~~~~~~~~~
+
+#{crud.types}
+GET			/?																${type.controllerClass.name.substring(12)}.index
+GET			/${type.controllerName}											${type.controllerClass.name.substring(12)}.list
+GET			/${type.controllerName}/new										${type.controllerClass.name.substring(12)}.blank
+GET			/${type.controllerName}/{id}									${type.controllerClass.name.substring(12)}.show
+GET			/${type.controllerName}/{id}/del								${type.controllerClass.name.substring(12)}.delete 
+GET			/${type.controllerName}/{id}/{field}/list/add					${type.controllerClass.name.substring(12)}.addListElement
+GET			/${type.controllerName}/{id}/{field}/list/{<\d+>idx}/del		${type.controllerClass.name.substring(12)}.deleteListElement
+GET			/${type.controllerName}/{id}/{field}/map/{mkey}/add				${type.controllerClass.name.substring(12)}.addMapElement
+GET			/${type.controllerName}/{id}/{field}/map/{mkey}/del				${type.controllerClass.name.substring(12)}.deleteMapElement
+GET			/${type.controllerName}/{id}/{field}							${type.controllerClass.name.substring(12)}.attachment
+GET			/${type.controllerName}/{id}/edit								${type.controllerClass.name.substring(12)}.edit
+POST		/${type.controllerName}											${type.controllerClass.name.substring(12)}.create
+POST		/${type.controllerName}/{id}									${type.controllerClass.name.substring(12)}.save
+DELETE		/${type.controllerName}/{id}									${type.controllerClass.name.substring(12)}.delete 
+#{/crud.types}
+GET			/?																CRUD.index

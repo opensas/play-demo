@@ -1,0 +1,22 @@
+#{field (_prefix ? _prefix + '.' : 'object.') + _name}
+	<label for="${field.id}">
+		&{_name}
+	</label>
+	#{ifError field.name}
+		<span class="error">${field.error}</span>
+	#{/ifError}	
+	#{if _field.multiple}
+		#{if _field.multipleType == 'list'}
+			#{crud.objectList name:_name, value:_value, type:_field.property.relationType, prefix:_prefix, id:_id /}
+		#{/if}
+		#{elseif _field.multipleType == 'map'}
+			#{crud.objectMap name:_name, value:_value, type:_field.property.relationType, prefix:_prefix, id:_id /}
+		#{/elseif}
+	#{/if}
+	#{else}
+		#{crud.subform value:_value, type:_field.property.relationType, prefix:field.name /}
+	#{/else}
+	
+
+	<div style="clear:both;"></div>	
+#{/field}

@@ -1,0 +1,24 @@
+{%
+	if(object){
+        f = object.getClass().getField(field);
+        fieldType = f.getGenericType().getActualTypeArguments()[1];
+		fieldValue = f.get(object);
+	}
+%}
+#{ifErrors field}
+	<div class="crudFlash flashError">
+		${error}
+	</div>
+#{/ifErrors}
+#{else}
+ 	<div class="crudFlash flashSuccess">
+		&{'crud.addMapElement.success', field}
+	</div>
+#{/else}
+
+#{list items: fieldValue?.keySet(), as:'key'}
+	#{crud.objectMapItem 
+		prefix:'object.'+field, 
+		entityId:id, entityField:field,
+		itemKey:key, itemValue:fieldValue?.get(key), itemType:fieldType  /}
+#{/list}

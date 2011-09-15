@@ -1,0 +1,21 @@
+OtherIdModel(chboing):
+  alpha: chboing
+  beta: 1
+  
+OtherIdStringModel(plouf):
+  myId: plouf
+  alpha: plouf
+  beta: 1
+  link: chboing
+
+OtherIdStringModel2(plouf2):
+  myId: plouf2
+  alpha: plouf2
+  beta: 2
+  link: plouf
+
+OtherIdStringModelNativeEmbedded(container):
+  myId: container
+  alpha: test
+  beta: 234
+  embed: plouf2

@@ -1,0 +1,8 @@
+EmbeddedModel(emb):
+  id: emb
+  alpha: chboing
+  beta: 1
+      
+ContainerModel(cont):
+  id: cont
+  embed: emb
