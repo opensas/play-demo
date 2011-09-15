@@ -1,4 +1,11 @@
 # Application dependencies
 
 require:
-    - play
+    - play -> crud
+    - provided -> DateHelper 1.0 
+repositories: 
+    - provided: 
+        type:       local 
+        artifact:   "${application.path}/jar/[module]-[revision].jar" 
+        contains: 
+            - provided -> * 

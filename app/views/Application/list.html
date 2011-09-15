@@ -1,0 +1,66 @@
+#{extends 'main.html' /}
+#{set title:'Events' /}
+
+<section id="list">
+
+<div class="page-header">
+    <h1>Events</h1>
+</div>
+
+#{if flash.success}
+    <div class="alert-message success">
+        <a class="close" href="#">&times;</a>
+        <p>${flash.success}</p>
+    </div>
+#{/if}
+
+<div class="row">
+#{if events}
+    <table class="zebra-striped sorted">
+        <thead>
+            <th>#</th>
+            <th>Event</th>
+            <th>Type</th>
+            <th>Place</th>
+            <th>Date</th>
+            <th></th>
+        </thead>
+    #{list events, as:'event'}
+        <tr id="row_${event.id}">
+            <td>${event.id}</td>
+            <td>#{a @form(event.id)}${event.name}#{/a}</td>
+            <td>${event.type.name}</td>
+            <td>${event.place}</td>
+            <td>${event?.date?.format('MM-dd-yyyy HH:mm')}</td>
+            <td><a href="javascript:del(${event.id})"><img src="@{'/public/images/delete.jpg'}" /></a></td>
+        </tr>
+    #{/list}
+    </table>
+#{/if}
+#{else}
+¡No events in sight!
+#{/else}
+</div> <!-- /row -->
+
+<div class="list-actions">
+    #{a @form(), class:'btn primary'}new event#{/a}
+    #{a @loadFromYamlFile(), class:'btn'}load from yaml#{/a}
+</div>
+
+</section>
+
+<script>
+    $(function() {
+	    $("table.sorted").tablesorter({ sortList: [[1,0]] });
+    });
+</script>
+
+<script>
+function del(id) {
+    $.ajax( {
+        type: "DELETE",
+        url: '/event/' + id
+    });
+    $("#row_" + id).fadeOut(1000);
+}
+</script>
