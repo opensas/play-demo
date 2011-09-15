@@ -15,5 +15,7 @@ public class User extends Model {
     // Twitter
     public String token;
     public String secret;
-	
+
+    // Facebook
+    public String accessToken;
 }
