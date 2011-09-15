@@ -21,6 +21,7 @@ GET     /load                                   Application.loadFromYamlFile
 # Authentication
 #
 GET     /oauthtw                                Secure.oauthTwitter
+GET     /oauthfb                                Secure.oauthFacebook
 GET     /login                                  Secure.login
 GET     /logout                                 Secure.logout
 
