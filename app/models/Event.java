@@ -41,11 +41,5 @@ public class Event extends EnhancedModel {
 	public static Event findById(Long id) {
 		return all().filter("id", id).get();
 	}
-	
-	@Override
-	public void get() {
-		super.get();
-		type = EventType.findById(type.id);
-	}
-	
+
 }
