@@ -42,4 +42,10 @@ public class Event extends EnhancedModel {
 		return all().filter("id", id).get();
 	}
 	
+	@Override
+	public void get() {
+		super.get();
+		type = EventType.findById(type.id);
+	}
+	
 }

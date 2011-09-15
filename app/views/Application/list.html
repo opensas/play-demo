@@ -23,7 +23,7 @@
         <thead>
             <th>#</th>
             <th>Event</th>
-            <th>Type</th><th>Type2</th>
+            <th>Type</th>
             <th>Place</th>
             <th>Date</th>
             <th></th>
@@ -33,7 +33,6 @@
             <td>${event.id}</td>
             <td>#{a @form(event.id)}${event.name}#{/a}</td>
             <td>${models.EventType.findById(event.type.id)?.name}</td>
-            <td>${event.type}</td>
             <td>${event.place}</td>
             <td>${event?.date?.format('MM-dd-yyyy HH:mm')}</td>
             <td><a href="javascript:del(${event.id})"><img src="@{'/public/images/delete.jpg'}" /></a></td>
