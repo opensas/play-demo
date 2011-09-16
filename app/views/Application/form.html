@@ -1,0 +1,64 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<section id="forms">
+
+<div class="page-header">
+  <h1>${event.id ? "Update event": "Create new event"}</h1>
+</div>
+
+<div class="row">
+    <div class="span4 columns">
+        <p>Enter the data for the next events.</p>
+    </div>
+
+    <div class="span12 columns">
+
+        #{ifErrors}
+            <div class="alert-message error">
+                <a class="close" href="#">&times;</a>
+                <p><strong>Oops! </strong>Errors detected.</p>
+            </div>
+        #{/ifErrors}
+    
+        #{form @save()}
+        
+        <input type="hidden" name="event.id" id="name" value="${event.id}" />
+
+        #{input name:'event.name', label:'Name', help:"enter the event's description" /}
+
+        #{input name:'event.type.id', label:'Tipo', help:"select the event's type"}
+            #{combo items:types, name:'event.type.id', value:event.type?.id /}
+        #{/input}
+        
+        #{input name:'event.place', label:'Place', help:"enter the event's place" /}
+
+        #{input name:'event.date', label:'Date & time', 
+            value:event.date?.format('MM-dd-yyyy HH:mm'), 
+            help:'enter date and time of the event (mm-dd-aaaa hh:mm)' 
+        /}        
+        
+        <div class="actions">
+            <button type="submit" class="btn primary">Save changes</button>
+            #{a @list(), class:"btn"}Cancel#{/a}
+        </div>
+        
+        #{/form}
+    
+    </div> <!-- /div class="span12 columns"> -->
+
+</div> <!-- /div class="row"> -->
+
+</section>
+<script type="text/javascript">
+    $.datepicker.setDefaults($.datepicker.regional['en']);
+    $('#event\\.date').datetimepicker( {
+        dateFormat: 'mm-dd-yy',
+        hour: 18,
+        numberOfMonths: 2,
+        hourGrid: 1,
+        minuteGrid: 10,
+        stepHour: 1,
+        stepMinute: 10
+    });
+</script>

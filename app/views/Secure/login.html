@@ -1,0 +1,10 @@
+#{extends 'main.html' /}
+#{set title:'Login' /}
+
+             <div class="alert-message block-message error">
+                <h3>&{'login.legend'}</h3>
+                <p style="padding-top:5px;">
+                    <a href="@{Secure.oauthTwitter}"><img src="@{'/public/images/sign-in-with-twitter.png'}"/></a>&nbsp;&nbsp;
+                    <a href="@{Secure.oauthFacebook}"><img style="padding-bottom:1px;" src="@{'/public/images/sign-in-with-facebook.png'}"/></a>
+                </p>
+            </div>

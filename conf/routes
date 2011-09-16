@@ -3,7 +3,27 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.index
+GET     /                                       Application.list
+GET     /events                                 Application.list
+
+GET     /edit/{id}                              Application.form
+GET     /new                                    Application.form
+
+POST    /save                                   Application.save
+
+POST    /delete/{id}                            Application.delete
+
+GET     /load                                   Application.loadFromYamlFile
+
+*       /admin                                  module:crud
+
+#
+# Authentication
+#
+GET     /oauthtw                                Secure.oauthTwitter
+GET     /oauthfb                                Secure.oauthFacebook
+GET     /login                                  Secure.login
+GET     /logout                                 Secure.logout
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

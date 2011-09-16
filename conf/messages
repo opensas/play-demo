@@ -1,3 +1,4 @@
 # You can specialize this file for each language.
 # For example, for French create a messages.fr file
 #
+login.legend=Hi!<br>You haven't authenticated yourself yet, use any of the buttons below to log in.
