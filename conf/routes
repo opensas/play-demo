@@ -15,10 +15,13 @@ POST    /delete/{id}                            Application.delete
 
 GET     /load                                   Application.loadFromYamlFile
 
+*       /admin                                  module:crud
+
 #
 # Authentication
 #
 GET     /oauthtw                                Secure.oauthTwitter
+GET     /oauthfb                                Secure.oauthFacebook
 GET     /login                                  Secure.login
 GET     /logout                                 Secure.logout
 
