@@ -1,0 +1,50 @@
+# you describe your data using the YAML notation here
+# and then load them using Fixtures.load("data.yml")
+
+EventType(presentacion):
+   name: presentacion
+
+EventType(workshop):
+   name: workshop
+
+Event(uno):
+   name: ¿Cómo afecta la nube a la integracion de Applicaciones?
+   type: presentacion
+   place: Microcentro
+   date: 05-19-2011 18:30:00
+   
+Event(dos):
+   name: Drools y jBPM5
+   type: presentacion
+   place: Microcentro
+   date: 06-17-2011 9:00:00
+
+Event(tres):
+   name: Search Engines
+   type: presentacion
+   place: Microcentro
+   date: 06-23-2011 18:30:00
+
+Event(cuatro):
+   name: ¿Por qué otros lenguajes en mi JVM?
+   type: presentacion
+   place: Microcentro
+   date: 08-04-2011 18:30:00
+
+Event(cinco):
+   name: Escala el Everest con Scala
+   type: presentacion
+   place: Microcentro
+   date: 08-04-2011 20:00:00
+
+Event(seis):
+   name: Java 7. ¿Qué hay de nuevo viejo?
+   type: presentacion
+   place: Palermo
+   date: 08-25-2011 18:30:00
+
+Event(siete):
+   name: Play! framework, un framework hecho en java.. para herejes
+   type: workshop
+   place: Retiro
+   date: 09-29-2011 20:00:00
