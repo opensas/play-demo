@@ -8,7 +8,6 @@ import java.util.*;
 
 @Entity()
 @Table(name="\"User\"")
-//@Table(name="tableUser")
 public class User extends Model {
     
     public String name;
