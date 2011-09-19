@@ -10,7 +10,7 @@ import play.jobs.OnApplicationStart;
 import play.test.Fixtures;
 
 @OnApplicationStart
-@Every("2min")
+@Every("30min")
 public class BootstrapJob extends Job {
 
 	@Override
