@@ -27,9 +27,10 @@
 	
 	        #{input name:'event.name', label:'event.name', help:'event.name.tip' /}
 	
-	        #{input name:'event.type.id', label:'event.type', help:'event.type.tip'}
+	        #{input name:'event.type.id', label:'event.type', errorName:'event.type', help:'event.type.tip'}
 	            #{combo items:types, name:'event.type.id', value:event.type?.id /}
 	        #{/input}
+	        <span>#{error 'event.type' /}</span><br /><br />
 	        
 	        #{input name:'event.place', label:'event.place', help:'event.place.tip' /}
 	

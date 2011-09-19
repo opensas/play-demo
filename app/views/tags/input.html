@@ -9,6 +9,7 @@
     _controlClass = _controlClass ?: 'input';
 
     _name = _name ?: 'field.name';
+    _errorName = _errorName ?: _name;
     _id = _id ?: _name;
     _label = _label ?: _name;
     _eval = _eval ?: _name;
@@ -23,7 +24,7 @@
     
     _help = _help ?: '';
     
-    _isError = play.data.validation.Validation.errors().forKey(_name);
+    _isError = play.data.validation.Validation.errors().forKey(_errorName);
     
     _errorClass =  _isError ? ' ' + _errorClass : '';
 }%
@@ -37,7 +38,7 @@
 #{else}
         <input class="${_inputClass}${_errorClass}" id="${_id}" name="${_name}" size="30" type="text" value="${_value}"/>
 #{/else}
-        #{if _isError}<span class="${_errorMessageClass}">#{error _name /}</span>#{/if}
+        #{if _isError}<span class="${_errorMessageClass}">#{error _errorName /}</span>#{/if}
         #{if _help}<div class="${_helpClass}">&{_help}</div>#{/if}
     </div>
 </div> <!-- /clearfix -->
