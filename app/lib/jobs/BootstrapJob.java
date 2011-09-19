@@ -4,7 +4,7 @@ import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import play.test.Fixtures;
 
-@OnApplicationStart
+//@OnApplicationStart
 public class BootstrapJob extends Job {
 
 	@Override

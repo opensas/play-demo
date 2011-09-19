@@ -4,12 +4,12 @@
 <section id="forms">
 
 <div class="page-header">
-  <h1>${event.id ? "Update event": "Create new event"}</h1>
+  <h1>${event.id ? messages.get("event.form.updateEvent"): messages.get("event.form.createEvent")}</h1>
 </div>
 
 <div class="row">
     <div class="span4 columns">
-        <p>Enter the data for the next events.</p>
+        <p>&{'event.form.subtitle'}</p>
     </div>
 
     <div class="span12 columns">
@@ -23,25 +23,25 @@
     
         #{form @save()}
         
-        <input type="hidden" name="event.id" id="name" value="${event.id}" />
-
-        #{input name:'event.name', label:'Name', help:"enter the event's description" /}
-
-        #{input name:'event.type.id', label:'Tipo', help:"select the event's type"}
-            #{combo items:types, name:'event.type.id', value:event.type?.id /}
-        #{/input}
-        
-        #{input name:'event.place', label:'Place', help:"enter the event's place" /}
-
-        #{input name:'event.date', label:'Date & time', 
-            value:event.date?.format('MM-dd-yyyy HH:mm'), 
-            help:'enter date and time of the event (mm-dd-aaaa hh:mm)' 
-        /}        
-        
-        <div class="actions">
-            <button type="submit" class="btn primary">Save changes</button>
-            #{a @list(), class:"btn"}Cancel#{/a}
-        </div>
+	        <input type="hidden" name="event.id" id="name" value="${event.id}" />
+	
+	        #{input name:'event.name', label:'event.name', help:'event.name.tip' /}
+	
+	        #{input name:'event.type.id', label:'event.type', help:'event.type.tip'}
+	            #{combo items:types, name:'event.type.id', value:event.type?.id /}
+	        #{/input}
+	        
+	        #{input name:'event.place', label:'event.place', help:'event.place.tip' /}
+	
+	        #{input name:'event.date', label:'event.date', 
+	            value:event.date?.format(), 
+	            help:'event.date.tip' 
+	        /}        
+	        
+	        <div class="actions">
+	            <button type="submit" class="btn primary">&{'event.button.saveEvent'}</button>
+	            #{a @list(), class:"btn"}&{'event.button.cancel'}#{/a}
+	        </div>
         
         #{/form}
     
@@ -51,9 +51,8 @@
 
 </section>
 <script type="text/javascript">
-    $.datepicker.setDefaults($.datepicker.regional['en']);
+    $.datepicker.setDefaults($.datepicker.regional['${lang}']);
     $('#event\\.date').datetimepicker( {
-        dateFormat: 'mm-dd-yy',
         hour: 18,
         numberOfMonths: 2,
         hourGrid: 1,
