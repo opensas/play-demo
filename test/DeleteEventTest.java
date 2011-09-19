@@ -13,7 +13,7 @@ public class DeleteEventTest extends FunctionalTest {
 	@Before
 	public void deleteModels() {
 		Fixtures.deleteAllModels();
-		Fixtures.loadModels("data.yml");
+		Fixtures.loadModels("data-test.yml");
 	}
 
     @Test
