@@ -12,6 +12,11 @@ public class DateDiffTest extends UnitTest {
     @Test
     public void dateDiffTest() {
 
+    	assertEquals("2 second", DateHelper.dateDiff(
+    			new DateTime(2011, 1, 1, 10, 30, 0, 0).toDate(), 
+    			new DateTime(2011, 1, 1, 10, 30, 1, 0).toDate()
+    	));
+    	
     	assertEquals("1 second", DateHelper.dateDiff(
     			new DateTime(2011, 1, 1, 10, 30, 0, 0).toDate(), 
     			new DateTime(2011, 1, 1, 10, 30, 1, 0).toDate()
