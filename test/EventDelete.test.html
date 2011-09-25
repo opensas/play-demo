@@ -14,18 +14,23 @@
     // Search Engines
     assertTextPresent('Search Engines')
     click('xpath=//a[text()="Search Engines"]/../..//a/img/..')
-    waitForTextNotPresent('Search Engines')
-
+    open('/')
+    // waitForTextNotPresent('Search Engines')
+    assertTextNotPresent('Search Engines')
 
     // Delete Drools and jBPM5
     assertTextPresent('Drools and jBPM5')
     click('xpath=//a[text()="Drools and jBPM5"]/../..//a/img/..')
-    waitForTextNotPresent('Drools and jBPM5')
+    open('/')
+    // waitForTextNotPresent('Drools and jBPM5')
+    assertTextNotPresent('Drools and jBPM5')
     
     // Delete Scale the Everest with Scala
     assertTextPresent('Scale the Everest with Scala')
     click('xpath=//a[text()="Scale the Everest with Scala"]/../..//a/img/..')
-    waitForTextNotPresent('Scale the Everest with Scala')
+    open('/')
+    // waitForTextNotPresent('Scale the Everest with Scala')
+    assertTextNotPresent('Scale the Everest with Scala')
     
     // delete the next 3 events
 	// click('xpath=//a/img/..')
