@@ -1,0 +1,9 @@
+<p class="lead">
+#{if nextEvent}
+	<span class="event-countdown">&{'header.countDown', nextEvent.countDown()}</span><br />
+	<span class="next-event">${nextEvent.name}</span><br />
+#{/if}
+#{else}
+	<span class="no-events">&{'event.noEvents'}</span><br />
+#{/else}
+</p>

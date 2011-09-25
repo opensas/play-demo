@@ -1,0 +1,9 @@
+<div id="masthead">
+	<div id="next-event"></div>
+</div>
+<script type="text/javascript">
+	$('#next-event').load('@{Application.nextEvent()}');
+	setInterval(function() {
+		$('#next-event').load('@{Application.nextEvent()}');
+	}, 2000);
+</script>

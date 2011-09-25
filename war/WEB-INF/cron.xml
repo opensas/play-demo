@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/load</url>
+    <description>Repopulate demo data every 30 minutes</description>
+    <schedule>every 30 minutes</schedule>
+  </cron>
+</cronentries>

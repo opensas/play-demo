@@ -1,0 +1,64 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<section id="forms">
+
+<div class="page-header">
+  <h1>${event.id ? messages.get("event.form.updateEvent"): messages.get("event.form.createEvent")}</h1>
+</div>
+
+<div class="row">
+    <div class="span4 columns">
+        <p>&{'event.form.subtitle'}</p>
+    </div>
+
+    <div class="span12 columns">
+
+        #{ifErrors}
+            <div class="alert-message error">
+                <a class="close" href="#">&times;</a>
+                <p><strong>Oops! </strong>Errors detected.</p>
+            </div>
+        #{/ifErrors}
+    
+        #{form @save()}
+        
+	        <input type="hidden" name="event.id" id="name" value="${event.id}" />
+	
+	        #{input name:'event.name', label:'event.name', help:'event.name.tip' /}
+	
+	        #{input name:'event.type.id', label:'event.type', errorName:'event.type', help:'event.type.tip'}
+	            #{combo items:types, name:'event.type.id', value:event.type?.id /}
+	        #{/input}
+	        <span>#{error 'event.type' /}</span><br /><br />
+	        
+	        #{input name:'event.place', label:'event.place', help:'event.place.tip' /}
+	
+	        #{input name:'event.date', label:'event.date', 
+	            value:event.date?.format(), 
+	            help:'event.date.tip' 
+	        /}        
+	        
+	        <div class="actions">
+	            <button type="submit" class="btn primary">&{'event.button.saveEvent'}</button>
+	            #{a @list(), class:"btn"}&{'event.button.cancel'}#{/a}
+	        </div>
+        
+        #{/form}
+    
+    </div> <!-- /div class="span12 columns"> -->
+
+</div> <!-- /div class="row"> -->
+
+</section>
+<script type="text/javascript">
+    $.datepicker.setDefaults($.datepicker.regional['${lang}']);
+    $('#event\\.date').datetimepicker( {
+        hour: 18,
+        numberOfMonths: 2,
+        hourGrid: 1,
+        minuteGrid: 10,
+        stepHour: 1,
+        stepMinute: 10
+    });
+</script>

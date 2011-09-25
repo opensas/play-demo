@@ -1,16 +1,46 @@
+%{
+messages = play.i18n.Messages;
+lang = play.i18n.Lang.get();
+%}
 <!DOCTYPE html>
 
 <html>
     <head>
         <title>#{get 'title' /}</title>
         <meta charset="${_response_encoding}">
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
+        <link href="@{'/public/stylesheets/bootstrap-1.2.0.css'}" rel="stylesheet">
+        <link rel="stylesheet" href="@{'/public/stylesheets/main.css'}" media="screen" >
+        <link href="@{'/public/stylesheets/jquery-ui-timepicker-addon.css'}" rel="stylesheet">
+        <link href="@{'/public/stylesheets/redmond/jquery-ui-1.8.16.custom.css'}" rel="stylesheet">
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-        <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="@{'/public/javascripts/jquery-1.6.3.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="@{'/public/javascripts/jquery.tablesorter.min.js'}"></script>
+        <script src="@{'/public/javascripts/jquery-ui-1.8.16.custom.min.js'}"></script>
+        <script src="@{'/public/javascripts/jquery-ui-timepicker-addon.js'}"></script>
+        <script src="@{'/public/javascripts/localization/jquery.ui.timepicker-' + lang + '.js'}"></script>
+        <script src="@{'/public/javascripts/localization/jquery.ui.datepicker-' + lang + '.js'}"></script>
         #{get 'moreScripts' /}
     </head>
     <body>
-        #{doLayout /}
+        #{include 'partials/topbar.html' /}
+        #{include 'partials/header.html' /}
+        <div class="container">    
+            #{doLayout /}
+        </div> <!-- /container -->
+        #{include 'partials/footer.html' /}
     </body>
 </html>
+<script type="text/javascript">
+    $('a.close').click( function() {
+        $(this).parent().fadeOut(1000);
+    })
+	$("body").bind("click", function (e) {
+    	$('.dropdown-toggle, .menu').parent("li").removeClass("open");
+	});
+	$(".dropdown-toggle, .menu").click(function (e) {
+	   var $li = $(this).parent("li").toggleClass('open');
+	return false;
+});
+
+</script>

@@ -1,0 +1,44 @@
+%{
+    messages = play.i18n.Messages;
+
+    _fieldClass = _fieldClass ?: 'clearfix';
+    _errorClass = _errorClass ?: 'error';
+    _inputClass = _inputClass ?: 'xlarge';
+    _helpClass = _helpClass ?: 'help-inline';
+    _errorMessageClass = _errorMessageClass ?: _helpClass;
+    _controlClass = _controlClass ?: 'input';
+
+    _name = _name ?: 'field.name';
+    _errorName = _errorName ?: _name;
+    _id = _id ?: _name;
+    _label = _label ?: _name;
+    _eval = _eval ?: _name;
+    
+    if (_value==null) {
+        try {
+            _value = evaluate('_caller.' + _eval);
+        } catch (Exception e) {
+            _value = '';
+        }
+    }
+    
+    _help = _help ?: '';
+    
+    _isError = play.data.validation.Validation.errors().forKey(_errorName);
+    
+    _errorClass =  _isError ? ' ' + _errorClass : '';
+}%
+
+<div class="${_fieldClass}${_errorClass}">
+    <label for="${_name}">&{_label}</label>
+    <div class="${_controlClass}">
+#{if _body}
+    #{doBody /}
+#{/if}
+#{else}
+        <input class="${_inputClass}${_errorClass}" id="${_id}" name="${_name}" size="30" type="text" value="${_value}"/>
+#{/else}
+        #{if _isError}<span class="${_errorMessageClass}">#{error _errorName /}</span>#{/if}
+        #{if _help}<div class="${_helpClass}">&{_help}</div>#{/if}
+    </div>
+</div> <!-- /clearfix -->

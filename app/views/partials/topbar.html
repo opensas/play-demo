@@ -1,0 +1,31 @@
+<div class="topbar">
+    <div class="topbar-inner">
+		<div class="container">
+			<h3><a href="/">&{'topbar.title'}</a></h3>
+			<ul>
+				<li><a href="#masthead">&{'topbar.about'}</a></li>
+				<li><a href="http://www.jugargentina.org/">&{'topbar.jugARHomepage'}</a></li>
+				<li><a href="http://www.linkedin.com/groups/Java-User-Group-Argentina-JUGAR-3716308">&{'topbar.linkedin'}</a></li>
+			</ul>
+			<ul class="nav secondary-nav">
+				#{if user}
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+		                <img id="avatar-image" src="${user.avatarUrl}" alt="avatar" />
+		                ${user.name}
+					</a>
+					<ul class="dropdown-menu">
+		                <li>#{a @secure.logout()}&{'topbar.signout'}#{/a}</li>
+					</ul>
+				</li>
+				#{/if}
+				#{else}
+				<li>#{a @secure.login()}&{'topbar.signin'}#{/a}</li>
+				#{/else}
+				<li id="play-logo">
+                    <a href="http://www.playframework.org/" id="play-logo"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
