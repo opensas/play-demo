@@ -2,6 +2,7 @@
 # For example, for French create a messages.fr file
 #
 
+
 event.title=jugAR Events
 
 event.name=Event
