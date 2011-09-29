@@ -1,29 +1,50 @@
-EventType(presentation):
-   name: presentation
+# you describe your data using the YAML notation here
+# and then load them using Fixtures.load("data.yml")
+
+EventType(presentacion):
+   name: presentacion
 
 EventType(workshop):
    name: workshop
 
-Event(first):
-   name: Drools and jBPM5
-   type: presentation
-   place: 64 rue Taitbout, PARIS
-   date: 06-17-2011 9:00:00
+Event(uno):
+   name: ¿Cómo afecta la nube a la integracion de Applicaciones?
+   type: presentacion
+   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   date: 19-05-2011 18:30:00
+   
+Event(dos):
+   name: Drools y jBPM5
+   type: presentacion
+   place: Reconquista 945, Hotel Melia
+   date: 17-06-2011 9:00:00
 
-Event(second):
+Event(tres):
    name: Search Engines
-   type: presentation
-   place: One Brattle Square, Cambridge
-   date: 06-23-2011 18:30:00
+   type: presentacion
+   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   date: 23-06-2011 18:30:00
 
-Event(Third):
-   name: Scale the Everest with Scala
-   type: presentation
-   place: One Brattle Square, Cambridge
+Event(cuatro):
+   name: ¿Por qué otros lenguajes en mi JVM?
+   type: presentacion
+   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   date: 04-08-2011 18:30:00
+
+Event(cinco):
+   name: Escala el Everest con Scala
+   type: presentacion
+   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
    date: 04-08-2011 20:00:00
 
-Event(Fourth):
-   name: Play! framework, a java web framework for non-purists
+Event(seis):
+   name: Java 7. ¿Qué hay de nuevo viejo?
+   type: presentacion
+   place: Costa Rica 5546, Zauber Software
+   date: 25-08-2011 18:30:00
+
+Event(siete):
+   name: Play! framework, un framework hecho en java.. para herejes
    type: workshop
-   place: 64 rue Taitbout, PARIS
-   date: 08-25-2012 20:00:00
+   place: Ingeniero Butty 240, piso 6° 
+   date: 03-10-2011 20:00:00
