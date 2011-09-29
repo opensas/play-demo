@@ -44,7 +44,7 @@ Event(seis):
    date: 08-25-2011 18:30:00
 
 Event(siete):
-   name: Play! framework, a java web framework for non-purist
+   name: Play! framework, a java web framework for non-purists
    type: workshop
    place: Downtown
    date: 10-05-2011 20:00:00
