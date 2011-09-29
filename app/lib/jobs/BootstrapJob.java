@@ -5,12 +5,12 @@ import models.EventType;
 import models.User;
 import play.Logger;
 import play.jobs.Every;
+
+import play.i18n.Lang;
+
 import play.jobs.Job;
-import play.jobs.OnApplicationStart;
 import play.test.Fixtures;
 
-@OnApplicationStart
-@Every("30min")
 public class BootstrapJob extends Job {
 
 	@Override

@@ -9,7 +9,6 @@ import models.EventType;
 import play.data.validation.Valid;
 import play.mvc.Before;
 import play.mvc.Controller;
-import play.mvc.With;
 
 public class Application extends Controller {
 	

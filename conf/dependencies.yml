@@ -2,7 +2,7 @@
 
 require:
     - play -> crud
-    - provided -> DateHelper 1.0 
+    - provided -> DateHelper 1.1 
 repositories: 
     - provided: 
         type:       local 

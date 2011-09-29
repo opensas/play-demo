@@ -1,16 +1,16 @@
-/* English/UK translation for the jQuery Timepicker Addon */
+/* Spanish translation for the jQuery Timepicker Addon */
 (function($) {
-	$.timepicker.regional['en-GB'] = {
-		timeOnlyTitle: 'Choose time',
-		timeText: 'Hour',
-		hourText: 'Hours',
-		minuteText: 'Minutes',
-		secondText: 'Seconds',
-		timezoneText: 'Time zone',
-		currentText: 'Now',
-		closeText: 'Close',
+	$.timepicker.regional['es'] = {
+		timeOnlyTitle: 'Elegir una hora',
+		timeText: 'Hora',
+		hourText: 'Horas',
+		minuteText: 'Minutos',
+		secondText: 'Segundos',
+		timezoneText: 'Huso horario',
+		currentText: 'Ahora',
+		closeText: 'Cerrar',
 		timeFormat: 'hh:mm',
 		ampm: false
 	};
-	$.timepicker.setDefaults($.timepicker.regional['en-GB']);
+	$.timepicker.setDefaults($.timepicker.regional['es']);
 })(jQuery);
