@@ -3,7 +3,7 @@
 #
 
 event.title=Eventos de jugAR
-event.flashData=(aplicación de prueba, la información será reinicializada cada 30 minutos)
+event.flashData=(aplicación de prueba, reinicializada cada media hora)
 
 event.name=Evento
 event.name.tip=Ingrese la descripción del evento.

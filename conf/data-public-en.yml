@@ -48,3 +48,9 @@ Event(siete):
    type: workshop
    place: Downtown
    date: 09-29-2011 20:00:00
+
+Event(ocho):
+   name: jugAR 2011 - Argentina Java User Group annual meeting
+   type: presentation
+   place: Puerto madero
+   date: 11-01-2011 13:00:00
