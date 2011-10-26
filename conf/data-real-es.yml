@@ -48,3 +48,9 @@ Event(siete):
    type: workshop
    place: Ingeniero Butty 240, piso 6° 
    date: 09-29-2011 20:00:00
+
+Event(ocho):
+   name: jugAR 2011 - Primer encuentro anual de usuario de Java de Argentina
+   type: presentation
+   place: ITBA (Aula Magna), Av. Eduardo Madero 399, Buenos Aires
+   date: 11-01-2011 13:00:00
