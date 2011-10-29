@@ -1,56 +1,56 @@
 # you describe your data using the YAML notation here
 # and then load them using Fixtures.load("data.yml")
 
-EventType(presentation):
-   name: presentation
+EventType(presentacion):
+   name: presentacion
 
 EventType(workshop):
    name: workshop
 
 Event(uno):
-   name: ¿How does cloud computing affect application integration?
-   type: presentation
-   place: Downtown
-   date: 05-19-2011 18:30:00
+   name: ¿Cómo afecta la nube a la integracion de Applicaciones?
+   type: presentacion
+   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   date: 19-05-2011 18:30:00
    
 Event(dos):
-   name: Drools and jBPM5
-   type: presentation
-   place: Downtown
-   date: 06-17-2011 9:00:00
+   name: Drools y jBPM5
+   type: presentacion
+   place: Reconquista 945, Hotel Melia
+   date: 17-06-2011 9:00:00
 
 Event(tres):
    name: Search Engines
-   type: presentation
-   place: Downtown
-   date: 06-23-2011 18:30:00
+   type: presentacion
+   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   date: 23-06-2011 18:30:00
 
 Event(cuatro):
-   name: ¿Why use other languages in my JVM?
-   type: presentation
-   place: Downtown
-   date: 08-04-2011 18:30:00
+   name: ¿Por qué otros lenguajes en mi JVM?
+   type: presentacion
+   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   date: 04-08-2011 18:30:00
 
 Event(cinco):
-   name: Scale the Everest with Scala
-   type: presentation
-   place: Downtown
-   date: 08-04-2011 20:00:00
+   name: Escala el Everest con Scala
+   type: presentacion
+   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   date: 04-08-2011 20:00:00
 
 Event(seis):
-   name: Java 7. ¿What's new doc?
-   type: presentation
-   place: Downtown
-   date: 08-25-2011 18:30:00
+   name: Java 7. ¿Qué hay de nuevo viejo?
+   type: presentacion
+   place: Costa Rica 5546, Zauber Software
+   date: 25-08-2011 18:30:00
 
 Event(siete):
-   name: Play! framework, a java web framework for non-purist
+   name: Play! framework, un framework hecho en java.. para herejes
    type: workshop
    place: Downtown
-   date: 09-29-2011 20:00:00
+   date: 29-09-2011 20:00:00
    
 Event(ocho):
    name: jugAR 2011 - Argentina Java User Group annual meeting
    type: presentation
    place: Buenos Aires
-   date: 11-01-2011 13:00:00
+   date: 01-11-2011 13:00:00

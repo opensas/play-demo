@@ -36,6 +36,7 @@ topbar.about=acerca de...
 topbar.jugARHomepage=página de jugAR
 topbar.linkedin=seguinos en linkedIn
 topbar.slides=mirá las diapositivas
+topbar.tutorial=seguí el tutorial
 
 topbar.signin=registrate
 topbar.signout=salir

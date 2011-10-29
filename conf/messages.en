@@ -36,6 +36,7 @@ topbar.about=about...
 topbar.jugARHomepage=jugAR homepage
 topbar.linkedin=follow us at linkedIn
 topbar.slides=check the slides!
+topbar.tutorial=follow the tutorial
 
 topbar.signin=signin
 topbar.signout=signout
@@ -61,3 +62,5 @@ dateHelper.minute=minute
 dateHelper.minutes=minutes
 dateHelper.second=second
 dateHelper.seconds=seconds
+
+

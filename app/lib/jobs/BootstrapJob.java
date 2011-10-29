@@ -1,5 +1,6 @@
 package lib.jobs;
 
+import play.i18n.Lang;
 import models.Event;
 import models.EventType;
 import models.User;
@@ -22,7 +23,7 @@ public class BootstrapJob extends Job {
 
 		// just to be sure, now delete all models
 		Fixtures.deleteAllModels();
-		Fixtures.loadModels("data.yml");
+		Fixtures.loadModels("data-" + Lang.get() + ".yml");
 
 		Logger.info("ran BootstrapJob, %s events loaded, %s types loaded", Event.count(), EventType.count());
 	}
