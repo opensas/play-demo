@@ -141,16 +141,17 @@ div.topbar-wrapper div.topbar .topbar-inner {
 	padding-bottom: 10px;
 }
 
+/*
 section#list div#jugar-logo {
     position: absolute; 
     top: 120px;
     left: 910px;
-}
+}*/
 
 .page-header {
 	/*float: left;
-	padding-right: 400px;*/
-    margin-top: 50px
+	padding-right: 400px;
+    margin-top: 50px*/
 }
 
 div#footer div.inner {
