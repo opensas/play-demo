@@ -10,47 +10,47 @@ EventType(workshop):
 Event(uno):
    name: ¿Cómo afecta la nube a la integracion de Applicaciones?
    type: presentacion
-   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   place: Microcentro
    date: 19-05-2011 18:30:00
    
 Event(dos):
    name: Drools y jBPM5
    type: presentacion
-   place: Reconquista 945, Hotel Melia
+   place: Microcentro
    date: 17-06-2011 9:00:00
 
 Event(tres):
    name: Search Engines
    type: presentacion
-   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   place: Microcentro
    date: 23-06-2011 18:30:00
 
 Event(cuatro):
    name: ¿Por qué otros lenguajes en mi JVM?
    type: presentacion
-   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   place: Microcentro
    date: 04-08-2011 18:30:00
 
 Event(cinco):
    name: Escala el Everest con Scala
    type: presentacion
-   place: 25 de Mayo 555 piso 9, Oficina de MuleSoft
+   place: Microcentro
    date: 04-08-2011 20:00:00
 
 Event(seis):
    name: Java 7. ¿Qué hay de nuevo viejo?
    type: presentacion
-   place: Costa Rica 5546, Zauber Software
+   place: Palermo
    date: 25-08-2011 18:30:00
 
 Event(siete):
    name: Play! framework, un framework hecho en java.. para herejes
    type: workshop
-   place: Ingeniero Butty 240, piso 6° 
-   date: 09-29-2011 20:00:00
+   place: Retiro
+   date: 05-10-2011 20:00:00
 
 Event(ocho):
    name: jugAR 2011 - Primer encuentro anual de usuarios de Java de Argentina
-   type: presentation
+   type: presentacion
    place: ITBA (Aula Magna), Av. Eduardo Madero 399, Buenos Aires
    date: 01-11-2011 13:00:00

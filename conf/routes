@@ -11,7 +11,7 @@ GET     /new                                    Application.form
 
 POST    /save                                   Application.save
 
-POST    /delete/{id}                            Application.delete
+DELETE  /event/{id}                             Application.delete
 
 GET     /load                                   Application.loadFromYamlFile
 

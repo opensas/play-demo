@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.joda.time.Period;
 
+import play.i18n.Messages;
+
 public class DateHelper {
 
 	public static String dateDiff(final Date begin, final Date end)  {
@@ -11,12 +13,12 @@ public class DateHelper {
 		final Period p = new Period(begin.getTime(), end.getTime());
 	
 		String message =
-			    addTime(p.getYears(), "year") +
-			    addTime(p.getMonths(), "month") +
-			    addTime(p.getDays() + (p.getWeeks()*7), "day") +
-			    addTime(p.getHours(), "hour") +
-			    addTime(p.getMinutes(), "minute") +
-			    addTime(p.getSeconds(), "second");
+			    addTime(p.getYears(), "dateHelper.year") +
+			    addTime(p.getMonths(), "dateHelper.month") +
+			    addTime(p.getDays() + (p.getWeeks()*7), "dateHelper.day") +
+			    addTime(p.getHours(), "dateHelper.hour") +
+			    addTime(p.getMinutes(), "dateHelper.minute") +
+			    addTime(p.getSeconds(), "dateHelper.second");
 		
 		message = message.replaceAll(", $", "");
 		
@@ -25,7 +27,11 @@ public class DateHelper {
 
 	private static String addTime(final Integer time, final String period, final String periods) {
 		if (time==0) return "";
-		return String.valueOf(time) + " " + (time==1 ? period : periods) + ", ";
+		
+		String periodLocalized = Messages.get(period);
+		String periodsLocalized = Messages.get(periods);
+		
+		return String.valueOf(time) + " " + (time==1 ? periodLocalized : periodsLocalized) + ", ";
 	}
 	private static String addTime(final Integer time, final String period) {
 		return addTime(time, period, period + "s");
