@@ -47,4 +47,10 @@ Event(siete):
    name: Play! framework, a java web framework for non-purists
    type: workshop
    place: Downtown
-   date: 09-29-2011 20:00:00
+   date: 10-05-2011 20:00:00
+
+Event(ocho):
+   name: jugAR 2011 - Argentina Java User Group annual meeting
+   type: presentation
+   place: ITBA (Aula Magna), Av. Eduardo Madero 399, Buenos Aires
+   date: 11-01-2011 13:00:00

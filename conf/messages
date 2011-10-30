@@ -4,6 +4,7 @@
 
 
 event.title=jugAR Events
+event.flashData=(demo application, data will be flashed every 30 minutes)
 
 event.name=Event
 event.name.tip=Enter the event's description.
@@ -35,6 +36,8 @@ topbar.title=jugArgentina Events
 topbar.about=about...
 topbar.jugARHomepage=jugAR homepage
 topbar.linkedin=follow us at linkedIn
+topbar.slides=check the slides!
+topbar.tutorial=follow the tutorial
 
 topbar.signin=signin
 topbar.signout=signout

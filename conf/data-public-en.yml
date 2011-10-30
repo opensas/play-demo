@@ -8,7 +8,7 @@ EventType(workshop):
    name: workshop
 
 Event(uno):
-   name: ¿Cómo afecta la nube a la integracion de Applicaciones?
+   name: ¿How does cloud computing affect application integration?
    type: presentation
    place: Downtown
    date: 05-19-2011 18:30:00
@@ -48,3 +48,9 @@ Event(siete):
    type: workshop
    place: Downtown
    date: 09-29-2011 20:00:00
+
+Event(ocho):
+   name: jugAR 2011 - Argentina Java User Group annual meeting
+   type: presentation
+   place: Puerto madero
+   date: 11-01-2011 13:00:00

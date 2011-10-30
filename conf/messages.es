@@ -3,6 +3,7 @@
 #
 
 event.title=Eventos de jugAR
+event.flashData=(aplicación de prueba, reinicializada cada media hora)
 
 event.name=Evento
 event.name.tip=Ingrese la descripción del evento.
@@ -34,6 +35,8 @@ topbar.title=Eventos de jugArgentina
 topbar.about=acerca de...
 topbar.jugARHomepage=página de jugAR
 topbar.linkedin=seguinos en linkedIn
+topbar.slides=mirá las diapositivas
+topbar.tutorial=seguí el tutorial
 
 topbar.signin=registrate
 topbar.signout=salir

@@ -46,5 +46,11 @@ Event(seis):
 Event(siete):
    name: Play! framework, un framework hecho en java.. para herejes
    type: workshop
-   place: Ingeniero Butty 240, piso 6° 
-   date: 03-10-2011 20:00:00
+   place: Downtown
+   date: 29-09-2011 20:00:00
+   
+Event(ocho):
+   name: jugAR 2011 - Argentina Java User Group annual meeting
+   type: presentation
+   place: Buenos Aires
+   date: 01-11-2011 13:00:00

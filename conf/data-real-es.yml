@@ -47,4 +47,10 @@ Event(siete):
    name: Play! framework, un framework hecho en java.. para herejes
    type: workshop
    place: Ingeniero Butty 240, piso 6° 
-   date: 03-10-2011 20:00:00
+   date: 09-29-2011 20:00:00
+
+Event(ocho):
+   name: jugAR 2011 - Primer encuentro anual de usuarios de Java de Argentina
+   type: presentation
+   place: ITBA (Aula Magna), Av. Eduardo Madero 399, Buenos Aires
+   date: 01-11-2011 13:00:00

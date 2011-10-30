@@ -47,4 +47,10 @@ Event(siete):
    name: Play! framework, un framework hecho en java.. para herejes
    type: workshop
    place: Retiro
-   date: 05-10-2011 20:00:00
+   date: 09-29-2011 20:00:00
+
+Event(ocho):
+   name: jugAR 2011 - Primer encuentro anual de usuario de Java de Argentina
+   type: presentation
+   place: Puerto madero
+   date: 01-11-2011 13:00:00
