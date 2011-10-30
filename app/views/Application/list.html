@@ -39,7 +39,8 @@
             <td>${event.type.name}</td>
             <td>${event.place}</td>
             <td>${event?.date?.format()}</td>
-            <td><a href="javascript:del(${event.id})"><img src="@{'/public/images/delete.jpg'}" /></a></td>
+            <td>#{a @delete(event.id)}<img src="@{'/public/images/delete.jpg'}" />#{/a}</td>
+            <!--<td><a href="javascript:del(${event.id})"><img src="@{'/public/images/delete.jpg'}" /></a></td>-->
         </tr>
     #{/list}
     </table>
