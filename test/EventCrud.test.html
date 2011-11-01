@@ -55,6 +55,7 @@
     # elimino el evento recién creado
 
     click('xpath=//a[text()="new event modified"]/../..//a/img/..')
+    pause(500)
     open('/')
     // waitForTextNotPresent('new event modified')
     assertTextNotPresent('new event modified')
