@@ -8,7 +8,7 @@ EventType(workshop):
    name: workshop
 
 Event(uno):
-   name: ¿How does cloud computing affect application integration?
+   name: ¿Cómo afecta la nube a la integracion de Applicaciones?
    type: presentation
    place: Downtown
    date: 05-19-2011 18:30:00
@@ -44,13 +44,13 @@ Event(seis):
    date: 08-25-2011 18:30:00
 
 Event(siete):
-   name: Play! framework, a java web framework for non-purist
+   name: Play! framework, a java web framework for non-purists
    type: workshop
    place: Downtown
-   date: 09-29-2011 20:00:00
+   date: 10-05-2011 20:00:00
 
 Event(ocho):
    name: jugAR 2011 - Argentina Java User Group annual meeting
    type: presentation
-   place: Puerto madero
+   place: ITBA (Aula Magna), Av. Eduardo Madero 399, Buenos Aires
    date: 11-01-2011 13:00:00
