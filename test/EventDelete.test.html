@@ -9,29 +9,35 @@
     // Delete Play! framework event
     assertTextPresent('Play! framework, a java web framework for non-purists')
     click('xpath=//a[text()="Play! framework, a java web framework for non-purists"]/../..//a/img/..')
-    pause(1000)
+    pause(500)
     waitForTextNotPresent('Play! framework, un framework hecho en java.. para herejes')
 
     // Search Engines
     assertTextPresent('Search Engines')
     click('xpath=//a[text()="Search Engines"]/../..//a/img/..')
-    pause(1000)
-    waitForTextNotPresent('Search Engines')
+    pause(500)
+    open('/')
+    // waitForTextNotPresent('Search Engines')
+    assertTextNotPresent('Search Engines')
 
     // Delete Drools and jBPM5
     assertTextPresent('Drools and jBPM5')
     click('xpath=//a[text()="Drools and jBPM5"]/../..//a/img/..')
-    pause(1000)
-    waitForTextNotPresent('Drools and jBPM5')
+    pause(500)
+    open('/')
+    // waitForTextNotPresent('Drools and jBPM5')
+    assertTextNotPresent('Drools and jBPM5')
     
     // Delete Scale the Everest with Scala
     assertTextPresent('Scale the Everest with Scala')
     click('xpath=//a[text()="Scale the Everest with Scala"]/../..//a/img/..')
-    pause(1000)
-    waitForTextNotPresent('Scale the Everest with Scala')
+    pause(500)
+    open('/')
+    // waitForTextNotPresent('Scale the Everest with Scala')
+    assertTextNotPresent('Scale the Everest with Scala')
     
     // delete the next 3 events
-	// clickAndWait('xpath=//a/img/..')
+	// click('xpath=//a/img/..')
 
     open('/')
     assertNotTitle('Application error')
@@ -39,6 +45,8 @@
     assertTextPresent('No events in sight...')
 
     clickAndWait('xpath=//a[text()="load from yaml file"]')
+    
+    // assertTextNotPresent('No events in sight...') // sigue sin haber eventos futuros
     
     assertTextPresent('Play! framework, a java web framework for non-purists')
     assertTextPresent('Search Engines')
